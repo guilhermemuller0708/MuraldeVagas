@@ -1,6 +1,5 @@
-import AuthInit from "app/modules/Auth";
-import React from "react";
-import { Provider } from "react-redux";
+import AuthInit from 'app/modules/Auth';
+import { Provider } from 'react-redux';
 
 const App = ({ store }) => {
   return (

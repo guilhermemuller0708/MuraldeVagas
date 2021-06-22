@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
-import { shallowEqual, useSelector, useDispatch } from "react-redux";
+import { useRef, useEffect, useState } from 'react';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 const AuthInit = ({ children }) => {
   const didRequest = useRef(false);
@@ -7,7 +7,7 @@ const AuthInit = ({ children }) => {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
   const { state } = useSelector(
     (state) => ({
-      state: state,
+      state: state
     }),
     shallowEqual
   );
@@ -35,13 +35,13 @@ const AuthInit = ({ children }) => {
     } else {
       //   dispatch(fulfillUser(undefined));
       setShowSplashScreen(false);
-      console.log("state", state);
+      console.log('state', state);
     }
 
     // eslint-disable-next-line
   }, []);
 
-  return showSplashScreen ? "loading" : <>{children}</>;
+  return showSplashScreen ? 'loading' : <>{children}</>;
 };
 
 export default AuthInit;
