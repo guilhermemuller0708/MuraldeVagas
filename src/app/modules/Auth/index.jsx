@@ -1,47 +1,53 @@
 import { useRef, useEffect, useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
+import { unwrapResult } from '@reduxjs/toolkit';
+
+import { logout } from './redux/slice';
+import { actions } from './redux/slice';
 
 const AuthInit = ({ children }) => {
   const didRequest = useRef(false);
   const dispatch = useDispatch();
   const [showSplashScreen, setShowSplashScreen] = useState(true);
-  const { state } = useSelector(
-    (state) => ({
-      state: state
+  const { authToken } = useSelector(
+    ({ auth }) => ({
+      authToken: auth.authToken
     }),
     shallowEqual
   );
 
   useEffect(() => {
     const requestUser = async () => {
-      try {
-        if (!didRequest.current) {
-          //request user
-        }
-      } catch (error) {
-        console.error(error);
-        if (!didRequest.current) {
-          //   dispatch(logout());
-        }
-      } finally {
-        setShowSplashScreen(false);
+      if (!didRequest.current) {
+        dispatch(actions.getUserByToken())
+          .then(unwrapResult)
+          .then(() => {
+            setShowSplashScreen(false);
+          })
+          .catch(() => {
+            dispatch(logout());
+          });
       }
 
       return () => (didRequest.current = true);
     };
 
-    if (false) {
+    if (authToken) {
       requestUser();
     } else {
-      //   dispatch(fulfillUser(undefined));
+      // dispatch(logout());
       setShowSplashScreen(false);
-      console.log('state', state);
     }
 
     // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
-  return showSplashScreen ? 'loading' : <>{children}</>;
+  return showSplashScreen ? (
+    <CircularProgress disableShrink />
+  ) : (
+    <>{children}</>
+  );
 };
 
 export default AuthInit;
