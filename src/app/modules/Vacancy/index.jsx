@@ -4,7 +4,7 @@ import VacancyPage from './pages/vacancy';
 const Vacancy = () => {
   return (
     <Switch>
-      <Route path="/board" component={VacancyPage} />
+      <Route path="/" component={VacancyPage} />
     </Switch>
   );
 };

@@ -1,0 +1,29 @@
+.wrapper-search {
+  margin: 2rem 4rem 2rem 4rem;
+}
+
+.wrapper-board {
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  margin: 0 4rem 1rem 4rem;
+
+  .filter {
+    width: 30%;
+    height: 100%;
+    background: #ffffff;
+    margin-right: 1rem;
+    -webkit-box-shadow: 1px 1px 3px 1px #ccc;
+    -moz-box-shadow: 1px 1px 3px 1px #ccc;
+    box-shadow: 1px 1px 3px 1px #ccc;
+    padding: 1rem;
+  }
+
+  .board {
+    width: 70%;
+    height: 100%;
+    background: #ffffff;
+    max-width: 70%;
+    overflow-y: scroll;
+  }
+}

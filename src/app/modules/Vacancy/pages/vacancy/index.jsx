@@ -1,32 +1,51 @@
-import { Grid, makeStyles, Paper } from '@material-ui/core';
-import { Filter } from './components/Filter';
+import { useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    margin: '4rem'
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary
-  }
-}));
+import { Search } from './components/Filters/Search';
+import { SideBar } from './components/Filters/SideBar';
+import List from './components/List';
+
+import { actions } from '../../redux/vacancy/slice';
+
+import './index.scss';
 
 const VacancyPage = () => {
-  const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const { entities, filter } = useSelector(
+    ({ vacancy }) => ({
+      entities: vacancy.entities.items,
+      filter: vacancy.filter
+    }),
+    shallowEqual
+  );
+
+  useEffect(() => {
+    const delaySearch = setTimeout(() => {
+      const promise = dispatch(actions.fetchVacancys(filter));
+
+      return () => {
+        promise.abort();
+      };
+    }, 500);
+    return () => {
+      clearTimeout(delaySearch);
+    };
+  }, [dispatch, filter]);
+
   return (
     <>
-      <div className={classes.root}>
-        <Filter />
-        <Grid container spacing={3}>
-          <Grid item xs={4}>
-            <Paper className={classes.paper}>xs=6</Paper>
-          </Grid>
-          <Grid item xs={8}>
-            <Paper className={classes.paper}>xs=6</Paper>
-          </Grid>
-        </Grid>
+      <div className="wrapper-search">
+        <Search />
+      </div>
+
+      <div className="wrapper-board">
+        <div className="filter">
+          <SideBar />
+        </div>
+        <div className="board">
+          <List entities={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+        </div>
       </div>
     </>
   );

@@ -10,6 +10,14 @@ const initialState = {
     items: []
   },
   vacancyForEdit: undefined,
+  filter: {
+    page: 0,
+    perPage: 10,
+    field: 'area',
+    order: 'ASC',
+    search: '',
+    salary: 2000
+  },
   error: null
 };
 
@@ -17,7 +25,12 @@ export const vacancySlice = createSlice({
   name: 'vacancy',
   initialState: initialState,
   reducers: {
-    func(state, { payload }) {}
+    setFilters(state, { payload }) {
+      state.filter = {
+        ...state.filter,
+        ...payload
+      };
+    }
   },
   extraReducers: {
     [fetchVacancys.pending]: (state, action) => {
@@ -37,7 +50,7 @@ export const vacancySlice = createSlice({
   }
 });
 
-export const { func } = vacancySlice.actions;
+export const { setFilters } = vacancySlice.actions;
 
 export const actions = {
   fetchVacancys

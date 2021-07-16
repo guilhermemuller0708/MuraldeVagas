@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import Header from 'app/components/Header';
 import Vacancy from 'app/modules/Vacancy';
@@ -12,6 +12,8 @@ const BasePage = () => {
         <Switch>
           <Route path="/profile" />
           <Route path="/board" component={Vacancy} />
+
+          <Redirect from="/" to="/board" />
         </Switch>
       </BrowserRouter>
     </>
