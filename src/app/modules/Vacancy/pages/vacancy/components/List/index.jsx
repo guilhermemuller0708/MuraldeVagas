@@ -1,4 +1,4 @@
-import { Vacancy } from './Vacancy';
+import { Vacancy } from '../Vacancy';
 
 const List = ({ entities = [] }) => {
   if (entities.length === 0) {

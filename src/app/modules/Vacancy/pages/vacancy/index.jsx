@@ -9,6 +9,21 @@ import { actions } from '../../redux/vacancy/slice';
 
 import './index.scss';
 
+const entitie = {
+  id: 1,
+  isFavorite: true,
+  descricao: `Linguagem de Programação: Java 8+ com Spring Boot Conhecimento e
+    experiência com bancos de dados SQL Server Experiência com
+    webservices, principalmente REST Desenvolvimento de testes: unitário
+    TDD Conhecimento de arquitetura Cloud (Azure), Clean Architecture
+    Conhecimento das ferramentas Atlassian (J`,
+  empresa: 'Empresa x',
+  requisitos: ['NodeJS', 'React'],
+  salario: '3.000,00',
+  titulo: 'Desenvolvedor(a) Java Back-end',
+  areaDaVaga: { nomeArea: 'Back-end' }
+};
+
 const VacancyPage = () => {
   const dispatch = useDispatch();
 
@@ -44,7 +59,7 @@ const VacancyPage = () => {
           <SideBar />
         </div>
         <div className="board">
-          <List entities={[1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+          <List entities={[entitie, entitie]} />
         </div>
       </div>
     </>
