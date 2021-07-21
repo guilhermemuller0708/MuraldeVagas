@@ -15,10 +15,11 @@ import './index.scss';
 const SideBar = () => {
   const dispatch = useDispatch();
 
-  const { field, order } = useSelector(
+  const { field, order, requirements } = useSelector(
     ({ vacancy }) => ({
       field: vacancy.filter.field,
-      order: vacancy.filter.order
+      order: vacancy.filter.order,
+      requirements: vacancy.filter.requirements
     }),
     shallowEqual
   );
@@ -31,7 +32,7 @@ const SideBar = () => {
     );
   };
 
-  const handleChangeSalary = (event, value) => {
+  const handleChangeSalary = (_, value) => {
     dispatch(
       setFilters({
         salary: value
@@ -66,8 +67,22 @@ const SideBar = () => {
           <FormControl>
             <InputLabel>Ordenar por</InputLabel>
             <Select value={order} onChange={handleChange} name="order">
-              <MenuItem value="ASC">ASC</MenuItem>
-              <MenuItem value="DESC">DESC</MenuItem>
+              <MenuItem value="ASC">Ascendente</MenuItem>
+              <MenuItem value="DESC">Descendente</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <div className="select-order">
+          <FormControl>
+            <InputLabel>Requisitos</InputLabel>
+            <Select
+              value={requirements}
+              onChange={handleChange}
+              name="requirements"
+              multiple
+            >
+              <MenuItem value="javascript">javascript</MenuItem>
+              <MenuItem value="spring">spring</MenuItem>
             </Select>
           </FormControl>
         </div>

@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { Pagination } from '@material-ui/lab';
 
 import { Search } from './components/Filters/Search';
 import { SideBar } from './components/Filters/SideBar';
 import List from './components/List';
 
-import { actions } from '../../redux/vacancy/slice';
+import { actions, setFilters } from '../../redux/vacancy/slice';
 
 import './index.scss';
 
@@ -27,9 +28,14 @@ const entitie = {
 const VacancyPage = () => {
   const dispatch = useDispatch();
 
-  const { entities, filter } = useSelector(
+  const {
+    entities = [],
+    filter,
+    totalCount
+  } = useSelector(
     ({ vacancy }) => ({
       entities: vacancy.entities.items,
+      totalCount: vacancy.entities.totalCount,
       filter: vacancy.filter
     }),
     shallowEqual
@@ -48,6 +54,18 @@ const VacancyPage = () => {
     };
   }, [dispatch, filter]);
 
+  const handleChangePaginator = (_, value) => {
+    dispatch(setFilters({ page: value }));
+  };
+
+  if (entities.length === 0) {
+    return (
+      <>
+        <div className="empty-list">Ops não foi encontrado nenhuma vaga</div>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="wrapper-search">
@@ -59,7 +77,19 @@ const VacancyPage = () => {
           <SideBar />
         </div>
         <div className="board">
-          <List entities={[entitie, entitie]} />
+          <div className="list">
+            <List entities={entities} />
+          </div>
+
+          <div className="paginator">
+            <Pagination
+              count={totalCount}
+              page={filter.page}
+              variant="outlined"
+              shape="rounded"
+              onChange={handleChangePaginator}
+            />
+          </div>
         </div>
       </div>
     </>

@@ -11,12 +11,13 @@ const initialState = {
   },
   vacancyForEdit: undefined,
   filter: {
-    page: 0,
+    page: 1,
     perPage: 10,
     field: 'area',
     order: 'ASC',
     search: '',
-    salary: 2000
+    salary: 2000,
+    requirements: []
   },
   error: null
 };

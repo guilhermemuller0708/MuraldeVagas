@@ -2,6 +2,14 @@
   margin: 2rem 4rem 2rem 4rem;
 }
 
+.empty-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 90vh;
+}
+
 .wrapper-board {
   height: 70vh;
   display: flex;
@@ -21,9 +29,18 @@
 
   .board {
     width: 70%;
-    height: 100%;
     background: #ffffff;
-    max-width: 70%;
-    overflow-y: scroll;
+
+    .list {
+      height: 90%;
+      overflow-y: scroll;
+    }
+
+    .paginator {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 10%;
+    }
   }
 }
