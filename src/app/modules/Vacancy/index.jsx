@@ -1,10 +1,13 @@
-import { Route, Switch } from 'react-router-dom';
-import VacancyPage from './pages/vacancy';
+import { Redirect, Route, Switch } from 'react-router-dom';
+
+import BoardPage from './pages/board';
 
 const Vacancy = () => {
   return (
     <Switch>
-      <Route path="/" component={VacancyPage} />
+      <Route path="/vacancy/board" component={BoardPage} />
+
+      <Redirect from="/" to="/vacancy/board" />
     </Switch>
   );
 };

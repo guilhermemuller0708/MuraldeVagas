@@ -1,14 +1,14 @@
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { TextField } from '@material-ui/core';
 
-import { setFilters } from '../../../../../redux/vacancy/slice';
+import { setFilters } from '../../../../../redux/board/slice';
 
 const Search = () => {
   const dispatch = useDispatch();
 
   const { search } = useSelector(
-    ({ vacancy }) => ({
-      search: vacancy.filter.search
+    ({ board }) => ({
+      search: board.filter.search
     }),
     shallowEqual
   );

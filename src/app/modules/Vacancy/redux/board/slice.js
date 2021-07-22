@@ -22,8 +22,8 @@ const initialState = {
   error: null
 };
 
-export const vacancySlice = createSlice({
-  name: 'vacancy',
+export const boardSlice = createSlice({
+  name: 'board',
   initialState: initialState,
   reducers: {
     setFilters(state, { payload }) {
@@ -51,7 +51,7 @@ export const vacancySlice = createSlice({
   }
 });
 
-export const { setFilters } = vacancySlice.actions;
+export const { setFilters } = boardSlice.actions;
 
 export const actions = {
   fetchVacancys

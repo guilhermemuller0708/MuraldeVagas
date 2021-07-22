@@ -6,9 +6,10 @@ import { Search } from './components/Filters/Search';
 import { SideBar } from './components/Filters/SideBar';
 import List from './components/List';
 
-import { actions, setFilters } from '../../redux/vacancy/slice';
+import { actions, setFilters } from '../../redux/board/slice';
 
 import './index.scss';
+import axios from 'axios';
 
 const entitie = {
   id: 1,
@@ -33,10 +34,10 @@ const VacancyPage = () => {
     filter,
     totalCount
   } = useSelector(
-    ({ vacancy }) => ({
-      entities: vacancy.entities.items,
-      totalCount: vacancy.entities.totalCount,
-      filter: vacancy.filter
+    ({ board }) => ({
+      entities: board.entities.items,
+      totalCount: board.entities.totalCount,
+      filter: board.filter
     }),
     shallowEqual
   );
@@ -61,7 +62,9 @@ const VacancyPage = () => {
   if (entities.length === 0) {
     return (
       <>
-        <div className="empty-list">Ops não foi encontrado nenhuma vaga</div>
+        <div className="empty-list">
+          <div>Ops não foi encontrado nenhuma vaga</div>
+        </div>
       </>
     );
   }

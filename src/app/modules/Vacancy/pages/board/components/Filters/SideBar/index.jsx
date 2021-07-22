@@ -8,7 +8,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 
-import { setFilters } from '../../../../../redux/vacancy/slice';
+import { setFilters } from '../../../../../redux/board/slice';
 
 import './index.scss';
 
@@ -16,10 +16,10 @@ const SideBar = () => {
   const dispatch = useDispatch();
 
   const { field, order, requirements } = useSelector(
-    ({ vacancy }) => ({
-      field: vacancy.filter.field,
-      order: vacancy.filter.order,
-      requirements: vacancy.filter.requirements
+    ({ board }) => ({
+      field: board.filter.field,
+      order: board.filter.order,
+      requirements: board.filter.requirements
     }),
     shallowEqual
   );

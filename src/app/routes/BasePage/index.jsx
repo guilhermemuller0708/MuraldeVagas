@@ -11,9 +11,9 @@ const BasePage = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/profile" />
-          <Route path="/board" component={Vacancy} />
+          <Route path="/vacancy" component={Vacancy} />
 
-          <Redirect from="/" to="/board" />
+          <Redirect from="/" to="/vacancy" />
         </Switch>
       </BrowserRouter>
     </>
