@@ -7,8 +7,8 @@ import Vacancy from 'app/modules/Vacancy';
 const BasePage = () => {
   return (
     <>
-      <Header />
       <BrowserRouter>
+        <Header />
         <Switch>
           <Route path="/profile" />
           <Route path="/vacancy" component={Vacancy} />

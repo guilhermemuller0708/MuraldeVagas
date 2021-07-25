@@ -13,4 +13,14 @@ const fetchVacancys = createAsyncThunk(
   }
 );
 
-export { fetchVacancys };
+const findAllVacancy = async () => {
+  try {
+    const { data } = await api.findAllWithoutRules();
+    return data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+
+export { fetchVacancys, findAllVacancy };

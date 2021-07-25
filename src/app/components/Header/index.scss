@@ -1,0 +1,18 @@
+.backgroundHeaderStyle {
+    background-color: #247ba0 !important;
+
+    button {
+        background-color: transparent;
+        box-shadow: none;
+        margin-right: 1rem;
+
+        a {
+            color: #ffffff;
+            text-decoration: none;
+
+            &:hover {
+                color: black;
+            }
+        }
+    }
+}

@@ -6,12 +6,15 @@ import {
   Toolbar,
   Typography,
   MenuItem,
-  Menu
+  Menu,
+  Button,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { logout } from 'app/modules/Auth/redux/slice';
+import { Link } from 'react-router-dom';
+import "./index.scss";
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -40,13 +43,18 @@ export default function MenuAppBar() {
   };
 
   return (
-    <div>
-      <AppBar position="static">
+    <div className="backgroundHeaderStyle">
+      <AppBar className="backgroundHeaderStyle" position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Mural de vagas
           </Typography>
-
+          <Button variant="contained">
+            <Link to="/vacancy/new">Cadastrar vaga</Link>
+          </Button>
+          <Button variant="contained">
+            <Link to="/vacancy/all">Listar Vagas</Link>
+          </Button>
           <div>
             {user?.name}
             <IconButton

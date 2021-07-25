@@ -26,4 +26,9 @@ const findAll = (queryParams) => {
   );
 };
 
-export { findAll };
+const findAllWithoutRules = () => {
+  return api.get(`${BASE_URL_API}`);
+}
+
+
+export { findAll, findAllWithoutRules };

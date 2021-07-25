@@ -1,0 +1,56 @@
+.container {
+    font-family: "Roboto", sans-serif;
+
+    h1 {
+        color: #ffffff;
+    }
+    .generalStyle {
+        background-color: #70c1b3;
+        border-radius: 10px;
+        -webkit-box-shadow: 5px 5px 5px 0px #ffffff;
+        box-shadow: 5px 5px 5px 0px #969696;
+        margin-top: 2rem;
+        padding: 2rem;
+        height: fit-content;
+
+        .backgroundStyle {
+            padding: 2rem 2rem 2rem 0rem;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            width: inherit;
+
+            h2 {
+                font-weight: 500;
+                font-size: 1.375rem;
+                margin-bottom: 15px;
+            }
+
+            p {
+                font-size: 0.75rem;
+                margin-bottom: 15px;
+            }
+
+            span {
+                font-size: 0.75rem;
+                background-color: #17882C;
+                color: #ffffff;
+                padding: 5px;
+            }
+
+            .cardVacancy {
+                margin: 0rem 2rem 2rem 0rem;
+                background-color: #ffffff;
+                border-radius: 10px;
+                width: inherit;
+                height: 200px;
+                -webkit-box-shadow: 5px 5px 5px 0px #969696;
+                box-shadow: 5px 5px 5px 0px #969696;
+
+                .content {
+                    padding: 2rem;
+                }
+            }
+        }
+    }
+}
