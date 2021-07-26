@@ -15,10 +15,11 @@ import './index.scss';
 const SideBar = () => {
   const dispatch = useDispatch();
 
-  const { field, order, requirements } = useSelector(
+  const { order, salary } = useSelector(
     ({ board }) => ({
       field: board.filter.field,
       order: board.filter.order,
+      salary: board.filter.salary,
       requirements: board.filter.requirements
     }),
     shallowEqual
@@ -50,6 +51,7 @@ const SideBar = () => {
             max={10000}
             defaultValue={0}
             step={500}
+            value={salary}
             valueLabelDisplay="auto"
             onChange={handleChangeSalary}
           />

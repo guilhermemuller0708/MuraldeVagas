@@ -1,11 +1,9 @@
 import { Favorite, FavoriteBorder as Desfavorie } from '@material-ui/icons';
-import { useHistory } from 'react-router-dom';
 import { Business, Money } from '@material-ui/icons';
 
 import './index.scss';
 
-const Vacancy = ({ entitie }) => {
-  const history = useHistory();
+const Vacancy = ({ entitie, handleClickVacancy, handleClickFavorite }) => {
   const {
     id,
     isFavorite = false,
@@ -16,14 +14,6 @@ const Vacancy = ({ entitie }) => {
     titulo,
     areaDaVaga
   } = entitie;
-
-  const handleClickFavorite = (vacancyId) => {
-    console.log('handleClickFavorite', vacancyId);
-  };
-
-  const handleClickVacancy = (vacancyId) => {
-    history.push(`/vacancy/${vacancyId}/view`);
-  };
 
   return (
     <>

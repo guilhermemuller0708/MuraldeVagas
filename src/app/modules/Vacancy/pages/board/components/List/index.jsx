@@ -1,4 +1,6 @@
+import { memo } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import Loader from 'app/components/Loader';
 import { Vacancy } from '../Vacancy';
@@ -6,12 +8,21 @@ import { Vacancy } from '../Vacancy';
 import './index.scss';
 
 const List = ({ entities = [] }) => {
+  const history = useHistory();
   const { isLoading } = useSelector(
     ({ board }) => ({
       isLoading: board.listLoading
     }),
     shallowEqual
   );
+
+  const handleClickFavorite = (vacancyId) => {
+    console.log('handleClickFavorite', vacancyId);
+  };
+
+  const handleClickVacancy = (vacancyId) => {
+    history.push(`/vacancy/${vacancyId}/view`);
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -32,7 +43,12 @@ const List = ({ entities = [] }) => {
       {entities.map((entitie) => {
         return (
           <>
-            <Vacancy entitie={entitie} key={entitie.id} />
+            <Vacancy
+              entitie={entitie}
+              key={entitie.id}
+              handleClickVacancy={handleClickVacancy}
+              handleClickFavorite={handleClickFavorite}
+            />
           </>
         );
       })}
@@ -40,4 +56,4 @@ const List = ({ entities = [] }) => {
   );
 };
 
-export default List;
+export default memo(List);

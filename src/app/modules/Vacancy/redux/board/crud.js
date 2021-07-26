@@ -9,7 +9,7 @@ const findAll = (queryParams) => {
     field = 'titulo',
     order = 'ASC',
     search = '',
-    requirements,
+    // requirements,
     salary = 0
   } = queryParams;
 
@@ -23,4 +23,8 @@ const findAll = (queryParams) => {
   return api.get(url);
 };
 
-export { findAll };
+const findById = (vacancyId) => {
+  return api.get(`${BASE_URL_API}/${vacancyId}`);
+};
+
+export { findAll, findById };
