@@ -1,9 +1,9 @@
 import { CircularProgress } from '@material-ui/core';
 import './index.scss';
 
-const Loader = () => {
+const Loader = ({ className = '' }) => {
   return (
-    <div className="wrapper-loading">
+    <div className={`wrapper-loading ${className}`}>
       <CircularProgress disableShrink />
     </div>
   );

@@ -13,10 +13,10 @@ const initialState = {
   filter: {
     page: 1,
     perPage: 10,
-    field: 'area',
+    field: 'titulo',
     order: 'ASC',
     search: '',
-    salary: 2000,
+    salary: 0,
     requirements: []
   },
   error: null
@@ -40,6 +40,8 @@ export const boardSlice = createSlice({
     [fetchVacancys.fulfilled]: (state, { payload }) => {
       console.log('payload', payload);
       state.listLoading = false;
+      state.entities.items = payload.content;
+      state.entities.totalCount = payload.totalPages;
     },
     [fetchVacancys.rejected]: (state, action) => {
       state.entities = {

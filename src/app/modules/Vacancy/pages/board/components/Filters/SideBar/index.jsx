@@ -48,13 +48,13 @@ const SideBar = () => {
           <Slider
             min={0}
             max={10000}
-            defaultValue={2000}
+            defaultValue={0}
             step={500}
             valueLabelDisplay="auto"
             onChange={handleChangeSalary}
           />
         </div>
-        <div className="select-order">
+        {/* <div className="select-order">
           <FormControl>
             <InputLabel>Ordenar por campo</InputLabel>
             <Select value={field} onChange={handleChange} name="field">
@@ -62,7 +62,7 @@ const SideBar = () => {
               <MenuItem value="titulo">Título</MenuItem>
             </Select>
           </FormControl>
-        </div>
+        </div> */}
         <div className="select-order">
           <FormControl>
             <InputLabel>Ordenar por</InputLabel>
@@ -72,7 +72,7 @@ const SideBar = () => {
             </Select>
           </FormControl>
         </div>
-        <div className="select-order">
+        {/* <div className="select-order">
           <FormControl>
             <InputLabel>Requisitos</InputLabel>
             <Select
@@ -85,7 +85,7 @@ const SideBar = () => {
               <MenuItem value="spring">spring</MenuItem>
             </Select>
           </FormControl>
-        </div>
+        </div> */}
       </div>
     </>
   );
