@@ -16,6 +16,16 @@
     .area {
       border-bottom: 0.1rem solid;
     }
+
+    .business-money {
+      display: flex;
+      flex-direction: column;
+
+      span {
+        display: flex;
+        align-items: center;
+      }
+    }
   }
 
   .favorite {

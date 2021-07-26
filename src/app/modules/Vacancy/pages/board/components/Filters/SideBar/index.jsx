@@ -15,10 +15,11 @@ import './index.scss';
 const SideBar = () => {
   const dispatch = useDispatch();
 
-  const { field, order, requirements } = useSelector(
+  const { order, salary } = useSelector(
     ({ board }) => ({
       field: board.filter.field,
       order: board.filter.order,
+      salary: board.filter.salary,
       requirements: board.filter.requirements
     }),
     shallowEqual
@@ -48,13 +49,14 @@ const SideBar = () => {
           <Slider
             min={0}
             max={10000}
-            defaultValue={2000}
+            defaultValue={0}
             step={500}
+            value={salary}
             valueLabelDisplay="auto"
             onChange={handleChangeSalary}
           />
         </div>
-        <div className="select-order">
+        {/* <div className="select-order">
           <FormControl>
             <InputLabel>Ordenar por campo</InputLabel>
             <Select value={field} onChange={handleChange} name="field">
@@ -62,7 +64,7 @@ const SideBar = () => {
               <MenuItem value="titulo">Título</MenuItem>
             </Select>
           </FormControl>
-        </div>
+        </div> */}
         <div className="select-order">
           <FormControl>
             <InputLabel>Ordenar por</InputLabel>
@@ -72,7 +74,7 @@ const SideBar = () => {
             </Select>
           </FormControl>
         </div>
-        <div className="select-order">
+        {/* <div className="select-order">
           <FormControl>
             <InputLabel>Requisitos</InputLabel>
             <Select
@@ -85,7 +87,7 @@ const SideBar = () => {
               <MenuItem value="spring">spring</MenuItem>
             </Select>
           </FormControl>
-        </div>
+        </div> */}
       </div>
     </>
   );

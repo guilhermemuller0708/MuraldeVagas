@@ -1,10 +1,10 @@
 import { useRef, useEffect, useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
-import { CircularProgress } from '@material-ui/core';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 import { logout } from './redux/slice';
 import { actions } from './redux/slice';
+import Loader from 'app/components/Loader';
 
 const AuthInit = ({ children }) => {
   const didRequest = useRef(false);
@@ -43,11 +43,7 @@ const AuthInit = ({ children }) => {
     // eslint-disable-next-line
   }, [dispatch]);
 
-  return showSplashScreen ? (
-    <CircularProgress disableShrink />
-  ) : (
-    <>{children}</>
-  );
+  return showSplashScreen ? <Loader /> : <>{children}</>;
 };
 
 export default AuthInit;

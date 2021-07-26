@@ -1,0 +1,65 @@
+.list-tags {
+  margin-bottom: 0.7rem;
+
+  span {
+    background: #3f51b5;
+    padding: 0.4rem;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    margin-right: 0.5rem;
+  }
+}
+
+.wrapper-view {
+  margin: 4rem;
+
+  .back {
+    margin-bottom: 1rem;
+
+    span {
+      background: #3f51b5;
+      padding: 0.3rem;
+      border-radius: 0.5rem;
+      width: 3rem;
+      display: flex;
+      justify-content: center;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+
+  .content {
+    margin: 0 2rem 0 2rem;
+
+    h3 {
+      margin-top: 1rem;
+    }
+
+    .area {
+      border-bottom: 0.2rem solid #3f51b5;
+    }
+
+    .company {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem 0 1rem 0;
+      font-weight: bold;
+    }
+
+    .salary {
+      font-size: 16px;
+    }
+
+    .benefit {
+      @extend .list-tags;
+    }
+
+    .requirements {
+      @extend .list-tags;
+    }
+
+    .differentials {
+      @extend .list-tags;
+    }
+  }
+}

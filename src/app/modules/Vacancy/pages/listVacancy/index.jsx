@@ -17,16 +17,16 @@ function ListVacancy() {
                         <h1>Vagas disponíveis</h1>
                     </div>
                     <div className="backgroundStyle">
-                        <div className="cardVacancy">
-                            {data.map(vacancy => (
-                                <div className="content" key={vacancy.id}>
+                        {data.map(vacancy => (
+                            <div className="cardVacancy"  key={vacancy.id}>
+                                <div className="content">
                                     <h2>{vacancy.titulo}</h2>
                                     <p><strong>{`${vacancy.empresa} - R$ ${vacancy.salario},00`}</strong></p>
                                     <p>{vacancy.descricao}</p>
                                     <span>{vacancy.desejavel}</span>
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
                 </>
                 ) : <div className="noContent"><h2>Nenhuma vaga cadastrada!!!</h2></div>}

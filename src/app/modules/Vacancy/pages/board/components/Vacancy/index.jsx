@@ -1,8 +1,9 @@
 import { Favorite, FavoriteBorder as Desfavorie } from '@material-ui/icons';
+import { Business, Money } from '@material-ui/icons';
 
 import './index.scss';
 
-const Vacancy = ({ entitie }) => {
+const Vacancy = ({ entitie, handleClickVacancy, handleClickFavorite }) => {
   const {
     id,
     isFavorite = false,
@@ -11,30 +12,31 @@ const Vacancy = ({ entitie }) => {
     requisitos = [],
     salario,
     titulo,
-    areaDaVaga: { nomeArea }
+    areaDaVaga
   } = entitie;
-
-  const handleClickFavorite = (vacancyId) => {
-    console.log('handleClickFavorite', vacancyId);
-  };
-
-  const handleClickVacancy = (vacancyId) => {
-    console.log('handleClickVacancy', vacancyId);
-  };
 
   return (
     <>
       <div className="wrapper">
         <div className="content" onClick={() => handleClickVacancy(id)}>
-          <span className="area">{nomeArea}</span>
+          <span className="area">{areaDaVaga.nomeArea}</span>
           <h3 className="title">{titulo}</h3>
-          <span>
-            {empresa} - R$ {salario}
-          </span>
+          <div className="business-money">
+            <span>
+              <Business /> {empresa}
+            </span>
+            <span>
+              <Money /> {salario}
+            </span>
+          </div>
           <p>{descricao}</p>
           <div className="requirements">
             {requisitos.map((requisito) => {
-              return <div className="requirement">{requisito}</div>;
+              return (
+                <div className="requirement" key={requisito}>
+                  {requisito}
+                </div>
+              );
             })}
           </div>
         </div>
