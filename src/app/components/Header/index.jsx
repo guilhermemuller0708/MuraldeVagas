@@ -47,7 +47,7 @@ export default function MenuAppBar() {
       <AppBar className="backgroundHeaderStyle" position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Mural de vagas
+            <Link to="/vacancy">Mural de vagas</Link>
           </Typography>
           <Button variant="contained">
             <Link to="/vacancy/new">Cadastrar vaga</Link>

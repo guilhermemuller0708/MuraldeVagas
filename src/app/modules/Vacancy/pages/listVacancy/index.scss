@@ -33,7 +33,7 @@
 
             span {
                 font-size: 0.75rem;
-                background-color: #17882C;
+                background-color: #17882c;
                 color: #ffffff;
                 padding: 5px;
             }
@@ -50,6 +50,15 @@
                 .content {
                     padding: 2rem;
                 }
+            }
+        }
+
+        .noContent {
+            h2 {
+                text-align: center;
+                font-size: 2rem;
+                color: #ff0000;
+                font-weight: 600;
             }
         }
     }

@@ -1,0 +1,42 @@
+.container {
+    font-family: "Roboto", sans-serif;
+
+    .titleStyle {
+        color: #000000;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .generalAddStyle {
+        background-color: #ffffff;
+        border-radius: 10px;
+        -webkit-box-shadow: 5px 5px 5px 0px #ffffff;
+        box-shadow: 5px 5px 5px 0px #969696;
+        margin-top: 2rem;
+        padding: 2rem;
+        height: fit-content;
+
+        .row {
+            margin-top: 20px;
+            .col-3,
+            .col-4,
+            .col-5,
+            .col-6 {
+                div {
+                    width: -webkit-fill-available;
+                }
+
+                #benefit {
+                    margin-top: 9px;
+                }
+            }
+
+            .buttonStyle {
+                margin-top: 20px;
+                float: right;
+                width: 250px;
+                height: 50px;
+            }
+        }
+    }
+}

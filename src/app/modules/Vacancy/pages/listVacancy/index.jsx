@@ -12,21 +12,24 @@ function ListVacancy() {
     return (
         <div className="container">
             <div className="col-12 generalStyle">
-                <div>
-                    <h1>Vagas disponíveis</h1>
-                </div>
-                <div className="backgroundStyle">
-                    <div className="cardVacancy">
-                        {data.map(vacancy => (
-                            <div className="content" key={vacancy.id}>
-                                <h2>{vacancy.titulo}</h2>
-                                <p><strong>{`${vacancy.empresa} - R$ ${vacancy.salario},00`}</strong></p>
-                                <p>{vacancy.descricao}</p>
-                                <span>{vacancy.desejavel}</span>
-                            </div>
-                        ))}
+                {(data.length > 0) ? (<>
+                    <div>
+                        <h1>Vagas disponíveis</h1>
                     </div>
-                </div>
+                    <div className="backgroundStyle">
+                        <div className="cardVacancy">
+                            {data.map(vacancy => (
+                                <div className="content" key={vacancy.id}>
+                                    <h2>{vacancy.titulo}</h2>
+                                    <p><strong>{`${vacancy.empresa} - R$ ${vacancy.salario},00`}</strong></p>
+                                    <p>{vacancy.descricao}</p>
+                                    <span>{vacancy.desejavel}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </>
+                ) : <div className="noContent"><h2>Nenhuma vaga cadastrada!!!</h2></div>}
             </div>
         </div >
     );
