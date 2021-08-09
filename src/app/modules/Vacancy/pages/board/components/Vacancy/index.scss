@@ -1,0 +1,55 @@
+.wrapper {
+  display: flex;
+  width: 99%;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0.2rem 0.1rem 0.3rem#00000029;
+
+  &:hover {
+    box-shadow: 0rem 0.2rem 0.5rem 0rem #00000080;
+  }
+
+  .content {
+    width: 90%;
+    cursor: pointer;
+
+    .area {
+      border-bottom: 0.1rem solid;
+    }
+
+    .business-money {
+      display: flex;
+      flex-direction: column;
+
+      span {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .favorite {
+    width: 10%;
+    display: flex;
+    justify-content: flex-end;
+
+    span {
+      svg {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .requirements {
+    display: flex;
+
+    .requirement {
+      border: 1px solid;
+      margin-right: 0.5rem;
+      padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+      border-radius: 0.5rem;
+      background: #17882c;
+      color: #ffffff;
+    }
+  }
+}

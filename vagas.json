@@ -1,0 +1,32 @@
+{
+  "vagas": [
+    {
+      "areaDaVaga": {
+        "id": 1
+      },
+      "beneficios": ["vale refeição", "plano de saúde"],
+      "descricao": "Esta é um breve descrição de como será o seu desenvolvimento desta empresa x, junto com suas responsabilidades",
+      "desejavel": "React",
+      "diferenciais": ["NextJs", "Redux", "Formik"],
+      "empresa": "171",
+      "enderecoEmpresa": "R. Alberto Hoffmann, 285 - Restinga, Porto Alegre - RS",
+      "requisitos": ["React", "Nodejs"],
+      "salario": 2000,
+      "titulo": "Desenvolvedor(a) Front-end React"
+    },
+    {
+      "areaDaVaga": {
+        "id": 2
+      },
+      "beneficios": ["vale refeição", "plano de saúde"],
+      "descricao": "Esta é um breve descrição de como será o seu desenvolvimento desta empresa x, junto com suas responsabilidades",
+      "desejavel": "Spring",
+      "diferenciais": ["Java 12", "NestJs", "Microserviços"],
+      "empresa": "171",
+      "enderecoEmpresa": "R. Alberto Hoffmann, 285 - Restinga, Porto Alegre - RS",
+      "requisitos": ["Java", "Spring"],
+      "salario": 0,
+      "titulo": "Desenvolvedor(a) Back-end Java"
+    }
+  ]
+}

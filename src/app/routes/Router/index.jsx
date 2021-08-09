@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { shallowEqual, useSelector } from 'react-redux';
 
@@ -24,7 +23,6 @@ const Router = () => {
         )}
 
         <Route path="/profile" />
-        <Route path="/board" />
         <Route path="/logout" component={Logout} />
 
         {!isAuthorized ? <Redirect to="/auth/login" /> : <BasePage />}
