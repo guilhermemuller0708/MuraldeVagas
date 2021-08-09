@@ -7,12 +7,13 @@ import {
   Select,
   MenuItem
 } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 
 import { setFilters } from '../../../../../redux/board/slice';
 
 import './index.scss';
 
-const SideBar = () => {
+const SideBar = ({ closeFilterFullScreen }) => {
   const dispatch = useDispatch();
 
   const { order, salary } = useSelector(
@@ -43,6 +44,13 @@ const SideBar = () => {
 
   return (
     <>
+      <div>
+        <div className="close-filter-full-screen">
+          <button onClick={closeFilterFullScreen}>
+            <Close />
+          </button>
+        </div>
+      </div>
       <div>
         <div>
           <Typography>Salário desejado</Typography>
