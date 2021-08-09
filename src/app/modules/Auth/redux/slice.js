@@ -3,9 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getUserByToken, loginUser } from './actions';
 
 const initialState = {
-  user: {
-    name: 'Nome do user'
-  },
+  user: undefined,
   authToken: undefined,
   loading: false
 };
