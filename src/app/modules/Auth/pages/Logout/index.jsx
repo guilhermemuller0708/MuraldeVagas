@@ -18,11 +18,11 @@ const Logout = () => {
     dispatch(logout());
   }, [dispatch]);
 
-  return hasAuthToken ? (
-    <CircularProgress disableShrink />
-  ) : (
-    <Redirect to="/" />
-  );
+  if (hasAuthToken) {
+    return <CircularProgress disableShrink />;
+  }
+
+  return <Redirect to="/login" />;
 };
 
 export default Logout;

@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
 
 import { useDispatch } from 'react-redux';
@@ -16,13 +15,13 @@ const initialValues = {
   password: ''
 };
 
-const Login = () => {
+const SignUp = () => {
   const dispatch = useDispatch();
 
-  const handleLogin = (values, { setSubmitting }) => {
+  const handleSignUp = (values, { setSubmitting }) => {
     console.log('values', values);
 
-    dispatch(actions.loginUser(values))
+    dispatch(actions.signUpUser(values))
       .then(unwrapResult)
       .then((data) => {
         console.log('data', data);
@@ -45,7 +44,7 @@ const Login = () => {
     <>
       <div className="wrapper-login">
         <div className="login-form">
-          <Formik initialValues={initialValues} onSubmit={handleLogin}>
+          <Formik initialValues={initialValues} onSubmit={handleSignUp}>
             {({ handleSubmit, isSubmitting }) => {
               return (
                 <>
@@ -79,11 +78,8 @@ const Login = () => {
           <div className="actions-sign-in">
             <div className="btn-login">
               <button type="submit" onClick={saveFormClick}>
-                Entrar
+                Cadastrar
               </button>
-            </div>
-            <div className="btn-sign-up">
-              <Link to="">Cadastro</Link>
             </div>
           </div>
         </div>
@@ -92,26 +88,4 @@ const Login = () => {
   );
 };
 
-export default Login;
-
-{
-  /* <div className="form-group row">
-  <label className="col-xl-3 col-lg-3 col-form-label">Customer Name</label>
-  <div className="col-lg-9 col-xl-6">
-    <input
-      disabled
-      name="name"
-      type="text"
-      placeholder="Name"
-      className={`form-control form-control-lg form-control-solid ${getInputClasses(
-        touched,
-        errors,
-        'name'
-      )}`}
-      onChange={(e) => setFieldValue('name', e.target.value)}
-      {...getFieldProps('name')}
-    />
-    {touched.name && errors.name ? <code>{errors.name}</code> : null}
-  </div>
-</div>; */
-}
+export default SignUp;
