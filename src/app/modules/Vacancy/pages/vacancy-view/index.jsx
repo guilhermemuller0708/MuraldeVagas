@@ -46,7 +46,7 @@ const VacancyView = () => {
         </span>
       </div>
       <div className="content">
-        <span className="area">{vacancyForView.areaDaVaga.areaDaVaga}</span>
+        <span className="area">{vacancyForView?.areaDaVaga?.areaDaVaga}</span>
         <h3>{vacancyForView.titulo}</h3>
         <span className="salary">
           <Money /> {vacancyForView.salario}

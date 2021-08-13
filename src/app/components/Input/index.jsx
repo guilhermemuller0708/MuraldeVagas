@@ -13,7 +13,10 @@ const Input = ({
     <>
       <div className="wrapper-input">
         {label ? <span>{label}</span> : ''}
-        <input {...props} {...field} />
+        <input {...props} type={type} {...field} />
+        {touched[field.name] && errors[field.name] ? (
+          <code>{errors[field.name]}</code>
+        ) : null}
       </div>
     </>
   );

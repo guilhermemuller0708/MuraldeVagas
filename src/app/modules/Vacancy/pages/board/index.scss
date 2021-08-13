@@ -65,6 +65,15 @@ $medium: 900px;
 }
 
 @media screen and (max-width: $small) {
+  .empty-list div {
+    padding: 1.5rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .wrapper-search {
+    margin: 2rem 1rem 1rem 1rem !important;
+  }
+
   .filter {
     display: none;
   }

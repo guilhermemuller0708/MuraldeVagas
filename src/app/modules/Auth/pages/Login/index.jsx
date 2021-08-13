@@ -1,8 +1,8 @@
 import { useRef } from 'react';
+import { object, string } from 'yup';
 import { Link } from 'react-router-dom';
-import { Field, Form, Formik } from 'formik';
-
 import { useDispatch } from 'react-redux';
+import { Field, Form, Formik } from 'formik';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 import './index.scss';
@@ -12,9 +12,14 @@ import { Input } from 'app/components/Input';
 import { actions } from '../../redux/slice';
 
 const initialValues = {
-  user: '',
+  name: '',
   password: ''
 };
+
+const Schema = object().shape({
+  name: string().required('Campo obrigatório'),
+  password: string().required('Campo obrigatório')
+});
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -45,13 +50,17 @@ const Login = () => {
     <>
       <div className="wrapper-login">
         <div className="login-form">
-          <Formik initialValues={initialValues} onSubmit={handleLogin}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={Schema}
+            onSubmit={handleLogin}
+          >
             {({ handleSubmit, isSubmitting }) => {
               return (
                 <>
                   <Form className="form">
                     <Field
-                      name="user"
+                      name="name"
                       component={Input}
                       label="Usuário"
                       type="text"
@@ -83,7 +92,7 @@ const Login = () => {
               </button>
             </div>
             <div className="btn-sign-up">
-              <Link to="">Cadastro</Link>
+              <Link to="/signup">Cadastro</Link>
             </div>
           </div>
         </div>

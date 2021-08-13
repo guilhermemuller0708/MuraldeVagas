@@ -1,7 +1,8 @@
 import { useRef } from 'react';
-import { Field, Form, Formik } from 'formik';
-
+import { object, string } from 'yup';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Field, Form, Formik } from 'formik';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 import './index.scss';
@@ -11,9 +12,18 @@ import { Input } from 'app/components/Input';
 import { actions } from '../../redux/slice';
 
 const initialValues = {
-  user: '',
+  name: '',
+  email: '',
   password: ''
 };
+
+const Schema = object().shape({
+  name: string().required('Campo obrigatório'),
+  email: string().email('Insira um e-mail').required('Campo obrigatório'),
+  password: string()
+    .min(5, 'Digite ao menos 5 caracteres')
+    .required('Campo obrigatório')
+});
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -44,16 +54,26 @@ const SignUp = () => {
     <>
       <div className="wrapper-login">
         <div className="login-form">
-          <Formik initialValues={initialValues} onSubmit={handleSignUp}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={Schema}
+            onSubmit={handleSignUp}
+          >
             {({ handleSubmit, isSubmitting }) => {
               return (
                 <>
                   <Form className="form">
                     <Field
-                      name="user"
+                      name="name"
                       component={Input}
-                      label="Usuário"
+                      label="Nome"
                       type="text"
+                    />
+                    <Field
+                      name="email"
+                      component={Input}
+                      label="Email"
+                      type="email"
                     />
                     <Field
                       name="password"
@@ -80,6 +100,9 @@ const SignUp = () => {
               <button type="submit" onClick={saveFormClick}>
                 Cadastrar
               </button>
+            </div>
+            <div className="btn-sign-up">
+              <Link to="/login">Login</Link>
             </div>
           </div>
         </div>

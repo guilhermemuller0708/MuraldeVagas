@@ -17,17 +17,13 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
-        {!isAuthorized ? (
-          <Route component={Login} />
-        ) : (
-          <Redirect from="/auth" to="/" />
-        )}
+        <Route path="/signup" component={SignUp} />
+        <Route path="/login" component={Login} />
+
+        {!isAuthorized ? <Redirect to="/login" /> : <BasePage />}
 
         <Route path="/profile" />
         <Route path="/logout" component={Logout} />
-        <Route path="/signup" component={SignUp} />
-
-        {!isAuthorized ? <Redirect to="/auth/login" /> : <BasePage />}
       </Switch>
     </BrowserRouter>
   );
