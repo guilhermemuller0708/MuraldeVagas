@@ -18,9 +18,9 @@ const AuthInit = ({ children }) => {
   );
 
   useEffect(() => {
-    const requestUser = async () => {
+    const requestUser = async (token) => {
       if (!didRequest.current) {
-        dispatch(actions.getUserByToken())
+        dispatch(actions.getUserByToken(token))
           .then(unwrapResult)
           .then(() => {
             setShowSplashScreen(false);
@@ -33,10 +33,12 @@ const AuthInit = ({ children }) => {
       return () => (didRequest.current = true);
     };
 
-    if (authToken) {
-      requestUser();
+    const token = JSON.parse(window.localStorage.getItem('authToken'));
+
+    if (!!token) {
+      requestUser(token);
     } else {
-      // dispatch(logout());
+      dispatch(logout());
       setShowSplashScreen(false);
     }
 

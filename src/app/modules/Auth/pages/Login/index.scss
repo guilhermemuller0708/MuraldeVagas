@@ -18,6 +18,14 @@ $medium: 900px;
     border: 0.1rem solid #ccc;
     border-radius: 0.4rem;
 
+    .error-message-login {
+      background: #c53030e0;
+      padding: 1rem;
+      border-radius: 0.4rem;
+      border: 0.1rem solid #ff0000;
+      color: #ffffff;
+    }
+
     .form {
       width: 70%;
       display: flex;

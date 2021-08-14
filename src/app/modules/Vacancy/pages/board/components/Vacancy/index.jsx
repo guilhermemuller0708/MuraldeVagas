@@ -31,9 +31,9 @@ const Vacancy = ({ entitie, handleClickVacancy, handleClickFavorite }) => {
           </div>
           <p>{descricao}</p>
           <div className="requirements">
-            {requisitos.map((requisito) => {
+            {requisitos.map((requisito, index) => {
               return (
-                <div className="requirement" key={requisito}>
+                <div className="requirement" key={index}>
                   {requisito}
                 </div>
               );

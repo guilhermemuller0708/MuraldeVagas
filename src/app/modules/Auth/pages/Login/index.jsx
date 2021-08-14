@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { object, string } from 'yup';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
 import { unwrapResult } from '@reduxjs/toolkit';
 
@@ -12,31 +12,34 @@ import { Input } from 'app/components/Input';
 import { actions } from '../../redux/slice';
 
 const initialValues = {
-  name: '',
+  email: '',
   password: ''
 };
 
 const Schema = object().shape({
-  name: string().required('Campo obrigatório'),
+  email: string().required('Campo obrigatório'),
   password: string().required('Campo obrigatório')
 });
 
 const Login = () => {
   const dispatch = useDispatch();
 
-  const handleLogin = (values, { setSubmitting }) => {
-    console.log('values', values);
+  const { loginError } = useSelector(
+    ({ auth }) => ({ loginError: auth.loginError }),
+    shallowEqual
+  );
 
-    dispatch(actions.loginUser(values))
-      .then(unwrapResult)
-      .then((data) => {
-        console.log('data', data);
-        setSubmitting(false);
-      })
-      .catch((error) => {
-        console.warn(error);
-      });
+  const handleLogin = (values, { setSubmitting }) => {
+    const user = {
+      email: values.email,
+      senha: values.password
+    };
+
+    const promise = dispatch(actions.loginUser(user));
     setSubmitting(false);
+    return () => {
+      promise.abort();
+    };
   };
 
   const btnRef = useRef();
@@ -50,6 +53,11 @@ const Login = () => {
     <>
       <div className="wrapper-login">
         <div className="login-form">
+          {!!loginError ? (
+            <div className="error-message-login">{loginError.message}</div>
+          ) : (
+            ''
+          )}
           <Formik
             initialValues={initialValues}
             validationSchema={Schema}
@@ -60,7 +68,7 @@ const Login = () => {
                 <>
                   <Form className="form">
                     <Field
-                      name="name"
+                      name="email"
                       component={Input}
                       label="Usuário"
                       type="text"

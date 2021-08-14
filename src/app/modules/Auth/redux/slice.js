@@ -5,7 +5,8 @@ import { getUserByToken, loginUser, signUpUser } from './actions';
 const initialState = {
   user: undefined,
   authToken: undefined,
-  loading: false
+  loading: false,
+  loginError: undefined
 };
 
 export const authSlice = createSlice({
@@ -13,18 +14,34 @@ export const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     logout(state, { payload }) {
+      window.localStorage.removeItem('authToken');
       state.authToken = undefined;
       state.user = undefined;
     }
   },
   extraReducers: {
     [loginUser.pending]: (state, action) => {
+      state.loginError = undefined;
       state.loading = true;
     },
     [loginUser.fulfilled]: (state, { payload }) => {
+      console.log('payload - loginUser', payload);
+      state.user = {
+        email: 'email@teste.com',
+        name: 'Nome '
+      };
+      window.localStorage.setItem(
+        'authToken',
+        JSON.stringify({
+          email: 'email@teste.com',
+          name: 'Nome '
+        })
+      );
+      state.loginError = undefined;
       state.loading = false;
     },
-    [loginUser.rejected]: (state, action) => {
+    [loginUser.rejected]: (state, { payload }) => {
+      state.loginError = payload;
       state.loading = false;
     },
 
@@ -42,6 +59,7 @@ export const authSlice = createSlice({
       state.loading = true;
     },
     [getUserByToken.fulfilled]: (state, { payload }) => {
+      console.log('payload - getUserByToken', payload);
       state.loading = false;
     },
     [getUserByToken.rejected]: (state, action) => {
