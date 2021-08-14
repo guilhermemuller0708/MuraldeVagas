@@ -12,6 +12,7 @@ import {
 import { AccountCircle } from '@material-ui/icons';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
+import './index.scss';
 import { logout } from 'app/modules/Auth/redux/slice';
 
 const useStyles = makeStyles(() => ({
@@ -53,8 +54,8 @@ export default function MenuAppBar() {
             Mural de vagas
           </Typography>
 
-          <div>
-            {user?.name}
+          <div className="wrapper-user-context">
+            <p className="user-email">{user?.email}</p>
             <IconButton
               aria-controls="menu-appbar"
               aria-haspopup="true"

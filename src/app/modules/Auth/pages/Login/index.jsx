@@ -3,7 +3,6 @@ import { object, string } from 'yup';
 import { Link } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
-import { unwrapResult } from '@reduxjs/toolkit';
 
 import './index.scss';
 

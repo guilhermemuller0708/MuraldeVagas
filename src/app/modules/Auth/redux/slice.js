@@ -26,15 +26,11 @@ export const authSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, { payload }) => {
       console.log('payload - loginUser', payload);
-      state.user = {
-        email: 'email@teste.com',
-        name: 'Nome '
-      };
+      state.user = payload;
       window.localStorage.setItem(
         'authToken',
         JSON.stringify({
-          email: 'email@teste.com',
-          name: 'Nome '
+          token: payload.Authorization
         })
       );
       state.loginError = undefined;

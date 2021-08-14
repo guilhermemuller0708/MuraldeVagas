@@ -27,11 +27,9 @@ const signUpUser = createAsyncThunk(
 
 const getUserByToken = createAsyncThunk(
   'auth/user-by-token',
-  async (_, { rejectWithValue, getState }) => {
-    const { auth } = getState();
-
+  async (authToken, { rejectWithValue, getState }) => {
     try {
-      const { data } = await api.userByToken(auth.authToken);
+      const { data } = await api.userByToken(authToken);
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data);
