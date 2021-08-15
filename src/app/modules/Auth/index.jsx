@@ -12,14 +12,15 @@ const AuthInit = ({ children }) => {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
 
   useEffect(() => {
-    const requestUser = async (token) => {
+    const requestUser = async (user) => {
       if (!didRequest.current) {
-        dispatch(actions.getUserByToken(token))
+        dispatch(actions.getUserById(user))
           .then(unwrapResult)
           .then(() => {
             setShowSplashScreen(false);
           })
           .catch(() => {
+            setShowSplashScreen(false);
             dispatch(logout());
           });
       }
@@ -27,10 +28,10 @@ const AuthInit = ({ children }) => {
       return () => (didRequest.current = true);
     };
 
-    const token = JSON.parse(window.localStorage.getItem('authToken'));
+    const user = JSON.parse(window.localStorage.getItem('authToken'));
 
-    if (!!token) {
-      requestUser(token);
+    if (!!user) {
+      requestUser(user);
     } else {
       dispatch(logout());
       setShowSplashScreen(false);

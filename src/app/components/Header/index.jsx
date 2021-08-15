@@ -55,7 +55,7 @@ export default function MenuAppBar() {
           </Typography>
 
           <div className="wrapper-user-context">
-            <p className="user-email">{user?.email}</p>
+            <p className="user-email">{user?.nome}</p>
             <IconButton
               aria-controls="menu-appbar"
               aria-haspopup="true"
