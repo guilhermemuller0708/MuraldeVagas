@@ -1,9 +1,10 @@
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { shallowEqual, useSelector } from 'react-redux';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import Logout from 'app/modules/Auth/pages/Logout';
 import BasePage from '../BasePage';
 import Login from 'app/modules/Auth/pages/Login';
+import SignUp from 'app/modules/Auth/pages/SignUp';
 
 const Router = () => {
   const { isAuthorized } = useSelector(
@@ -13,19 +14,27 @@ const Router = () => {
     shallowEqual
   );
 
+  if (!isAuthorized) {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path="/signup" component={SignUp} />
+          <Route path="/login" component={Login} />
+
+          <Redirect from="*" to="/login" />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+
   return (
     <BrowserRouter>
       <Switch>
-        {!isAuthorized ? (
-          <Route component={Login} />
-        ) : (
-          <Redirect from="/auth" to="/" />
-        )}
+        <BasePage />
+        <Redirect to="/board" />
 
         <Route path="/profile" />
         <Route path="/logout" component={Logout} />
-
-        {!isAuthorized ? <Redirect to="/auth/login" /> : <BasePage />}
       </Switch>
     </BrowserRouter>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -24,6 +25,7 @@ const useStyles = makeStyles(() => ({
 
 export default function MenuAppBar() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -36,6 +38,10 @@ export default function MenuAppBar() {
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
 
   const handleClose = () => setAnchorEl(null);
+
+  const handleProfile = () => {
+    return history.push('/profile');
+  };
 
   const handleLogout = () => {
     handleClose();
@@ -72,7 +78,7 @@ export default function MenuAppBar() {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem value="profile" onClick={handleClose}>
+              <MenuItem value="profile" onClick={handleProfile}>
                 Perfil
               </MenuItem>
               <MenuItem value="logout" onClick={handleLogout}>

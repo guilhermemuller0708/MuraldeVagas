@@ -19,7 +19,7 @@ const Vacancy = ({ entitie, handleClickVacancy, handleClickFavorite }) => {
     <>
       <div className="wrapper">
         <div className="content" onClick={() => handleClickVacancy(id)}>
-          <span className="area">{areaDaVaga.nomeArea}</span>
+          <span className="area">{areaDaVaga?.nomeArea}</span>
           <h3 className="title">{titulo}</h3>
           <div className="business-money">
             <span>
@@ -31,9 +31,9 @@ const Vacancy = ({ entitie, handleClickVacancy, handleClickFavorite }) => {
           </div>
           <p>{descricao}</p>
           <div className="requirements">
-            {requisitos.map((requisito) => {
+            {requisitos.map((requisito, index) => {
               return (
-                <div className="requirement" key={requisito}>
+                <div className="requirement" key={index}>
                   {requisito}
                 </div>
               );

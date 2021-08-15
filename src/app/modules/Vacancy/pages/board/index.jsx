@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Pagination } from '@material-ui/lab';
+import { FilterList } from '@material-ui/icons';
 
 import { Search } from './components/Filters/Search';
 import { SideBar } from './components/Filters/SideBar';
@@ -11,6 +12,7 @@ import { actions, setFilters } from '../../redux/board/slice';
 import './index.scss';
 
 const VacancyPage = () => {
+  const [fullPageFilter, setFullPageFilter] = useState(false);
   const dispatch = useDispatch();
 
   const {
@@ -43,15 +45,24 @@ const VacancyPage = () => {
     dispatch(setFilters({ page: value }));
   };
 
+  const closeFilterFullScreen = () => {
+    setFullPageFilter((prevState) => !prevState);
+  };
+
   return (
     <>
       <div className="wrapper-search">
         <Search />
+        <div className="filter-list">
+          <button onClick={closeFilterFullScreen}>
+            <FilterList />
+          </button>
+        </div>
       </div>
 
       <div className="wrapper-board">
-        <div className="filter">
-          <SideBar />
+        <div className={`filter ${fullPageFilter ? 'filter-full-screen' : ''}`}>
+          <SideBar closeFilterFullScreen={closeFilterFullScreen} />
         </div>
         <div className="board">
           <div className="list">

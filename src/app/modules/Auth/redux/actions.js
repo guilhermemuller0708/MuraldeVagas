@@ -13,6 +13,18 @@ const loginUser = createAsyncThunk(
   }
 );
 
+const signUpUser = createAsyncThunk(
+  'auth/signUp',
+  async (user, { rejectWithValue }) => {
+    try {
+      const { data } = await api.signUp(user);
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const getUserByToken = createAsyncThunk(
   'auth/user-by-token',
   async (_, { rejectWithValue, getState }) => {
@@ -27,4 +39,4 @@ const getUserByToken = createAsyncThunk(
   }
 );
 
-export { loginUser, getUserByToken };
+export { loginUser, signUpUser, getUserByToken };

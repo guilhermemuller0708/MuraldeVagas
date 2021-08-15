@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { object, string } from 'yup';
 import { Link } from 'react-router-dom';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
 import { unwrapResult } from '@reduxjs/toolkit';
 
@@ -12,34 +12,35 @@ import { Input } from 'app/components/Input';
 import { actions } from '../../redux/slice';
 
 const initialValues = {
+  name: '',
   email: '',
   password: ''
 };
 
 const Schema = object().shape({
-  email: string().required('Campo obrigatório'),
-  password: string().required('Campo obrigatório')
+  name: string().required('Campo obrigatório'),
+  email: string().email('Insira um e-mail').required('Campo obrigatório'),
+  password: string()
+    .min(5, 'Digite ao menos 5 caracteres')
+    .required('Campo obrigatório')
 });
 
-const Login = () => {
+const SignUp = () => {
   const dispatch = useDispatch();
 
-  const { loginError } = useSelector(
-    ({ auth }) => ({ loginError: auth.loginError }),
-    shallowEqual
-  );
+  const handleSignUp = (values, { setSubmitting }) => {
+    console.log('values', values);
 
-  const handleLogin = (values, { setSubmitting }) => {
-    const user = {
-      email: values.email,
-      senha: values.password
-    };
-
-    const promise = dispatch(actions.loginUser(user));
+    dispatch(actions.signUpUser(values))
+      .then(unwrapResult)
+      .then((data) => {
+        console.log('data', data);
+        setSubmitting(false);
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
     setSubmitting(false);
-    return () => {
-      promise.abort();
-    };
   };
 
   const btnRef = useRef();
@@ -53,25 +54,26 @@ const Login = () => {
     <>
       <div className="wrapper-login">
         <div className="login-form">
-          {!!loginError ? (
-            <div className="error-message-login">{loginError.message}</div>
-          ) : (
-            ''
-          )}
           <Formik
             initialValues={initialValues}
             validationSchema={Schema}
-            onSubmit={handleLogin}
+            onSubmit={handleSignUp}
           >
             {({ handleSubmit, isSubmitting }) => {
               return (
                 <>
                   <Form className="form">
                     <Field
+                      name="name"
+                      component={Input}
+                      label="Nome"
+                      type="text"
+                    />
+                    <Field
                       name="email"
                       component={Input}
-                      label="Usuário"
-                      type="text"
+                      label="Email"
+                      type="email"
                     />
                     <Field
                       name="password"
@@ -96,11 +98,11 @@ const Login = () => {
           <div className="actions-sign-in">
             <div className="btn-login">
               <button type="submit" onClick={saveFormClick}>
-                Entrar
+                Cadastrar
               </button>
             </div>
             <div className="btn-sign-up">
-              <Link to="/signup">Cadastro</Link>
+              <Link to="/login">Login</Link>
             </div>
           </div>
         </div>
@@ -109,26 +111,4 @@ const Login = () => {
   );
 };
 
-export default Login;
-
-{
-  /* <div className="form-group row">
-  <label className="col-xl-3 col-lg-3 col-form-label">Customer Name</label>
-  <div className="col-lg-9 col-xl-6">
-    <input
-      disabled
-      name="name"
-      type="text"
-      placeholder="Name"
-      className={`form-control form-control-lg form-control-solid ${getInputClasses(
-        touched,
-        errors,
-        'name'
-      )}`}
-      onChange={(e) => setFieldValue('name', e.target.value)}
-      {...getFieldProps('name')}
-    />
-    {touched.name && errors.name ? <code>{errors.name}</code> : null}
-  </div>
-</div>; */
-}
+export default SignUp;
