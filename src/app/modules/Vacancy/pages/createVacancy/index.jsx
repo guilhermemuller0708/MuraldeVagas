@@ -12,6 +12,40 @@ function CreateVacancy() {
         event.preventDefault();
     }
 
+    const TagsInput = props => {
+        const [tags, setTags] = React.useState(props.tags);
+        const removeTags = indexToRemove => {
+            setTags([...tags.filter((_, index) => index !== indexToRemove)]);
+        };
+        const addTags = event => {
+            if (event.target.value !== "") {
+                setTags([...tags, event.target.value]);
+                event.target.value = "";
+            }
+        };
+        return (
+            <div className="tags-input">
+                <ul id="tags">
+                    {tags.map((tag, index) => (
+                        <li key={index} className="tag">
+                            <span className='tag-title'>{tag}</span>
+                            <span className='tag-close-icon'
+                                onClick={() => removeTags(index)}
+                            >
+                                x
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+                <input
+                    type="text"
+                    onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
+                    placeholder="Adicione um novo beneficio"
+                />
+            </div>
+        );
+    };
+
     return (
         <>
             <div className="container">
@@ -59,8 +93,8 @@ function CreateVacancy() {
                                         Designer
                                     </MenuItem>
                                 </TextField>
-                                <TextField required id="benefit" label="Beneficios" name="benefit"
-                                    onChange={(event) => setVacancy({ ...vacancy, benefit: [event.target.value] })} />
+                                <TagsInput id="benefit" label="Beneficios" name="benefit"
+                                    onChange={(event) => setVacancy({ ...vacancy, benefit: [event.target.value] })} tags={['Nodejs', 'MongoDB']} />
                             </div>
                         </div>
                         <div className="row">

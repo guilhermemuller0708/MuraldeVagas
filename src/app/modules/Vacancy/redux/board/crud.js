@@ -31,5 +31,9 @@ const findAllWithoutRules = () => {
   return api.get(`${BASE_URL_API}`);
 }
 
+const deleteVacancy = (vacancyId) => {
+  return api.delete(`${BASE_URL_API}/${vacancyId}`);
+}
 
-export { findAll, findById, findAllWithoutRules };
+
+export { findAll, findById, findAllWithoutRules, deleteVacancy };

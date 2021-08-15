@@ -22,6 +22,15 @@ const findAllVacancy = async () => {
   }
 };
 
+const deleteVacancyById = async (vacancyId) => {
+  try {
+    const { data } = await api.deleteVacancy(vacancyId);
+    return data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
 const fetchVacancyById = createAsyncThunk(
   'board/fetch-by-id',
   async (vacancyId, { rejectWithValue }) => {
@@ -34,4 +43,4 @@ const fetchVacancyById = createAsyncThunk(
   }
 );
 
-export { fetchVacancys, fetchVacancyById, findAllVacancy };
+export { fetchVacancys, fetchVacancyById, findAllVacancy, deleteVacancyById };
