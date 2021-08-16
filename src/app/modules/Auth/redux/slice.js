@@ -42,6 +42,7 @@ export const authSlice = createSlice({
     },
 
     [signUpUser.pending]: (state, action) => {
+      state.loginError = undefined;
       state.loading = true;
     },
     [signUpUser.fulfilled]: (state, { payload }) => {

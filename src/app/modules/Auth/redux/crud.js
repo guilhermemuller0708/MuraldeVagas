@@ -2,7 +2,7 @@ import api from 'app/services/api';
 
 const URL_API_RELOAD = '/usuarios';
 const URL_API_LOGIN = '/login';
-const URL_API_SIGNUP = '/signup';
+const URL_API_SIGNUP = '/candidatos';
 
 const login = (user) => {
   return api.post(URL_API_LOGIN, user);

@@ -71,7 +71,7 @@ const Login = () => {
                     <Field
                       name="email"
                       component={Input}
-                      label="Usuário"
+                      label="Email"
                       type="text"
                     />
                     <Field
@@ -104,9 +104,9 @@ const Login = () => {
                 </button>
               )}
             </div>
-            <div className="btn-sign-up">
-              <Link to="/signup">Cadastro</Link>
-            </div>
+          </div>
+          <div className="btn-sign-up">
+            Ainda não tem uma conta? <Link to="/signup">Cadastrar</Link>
           </div>
         </div>
       </div>

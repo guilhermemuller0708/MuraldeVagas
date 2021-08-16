@@ -1,8 +1,10 @@
 import { useRef } from 'react';
 import { object, string } from 'yup';
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
+import { useHistory } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 import './index.scss';
@@ -27,14 +29,35 @@ const Schema = object().shape({
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSignUp = (values, { setSubmitting }) => {
     console.log('values', values);
 
-    dispatch(actions.signUpUser(values))
+    const user = {
+      cpf: '00000000000',
+      email: values.email,
+      endereco: {
+        cep: '0',
+        cidade: ' ',
+        complemento: ' ',
+        estado: ' ',
+        logradouro: ' ',
+        numero: 0
+      },
+      nome: values.name,
+      senha: values.password,
+      telefones: [''],
+      tipo: 'candidato'
+    };
+
+    dispatch(actions.signUpUser(user))
       .then(unwrapResult)
       .then((data) => {
-        console.log('data', data);
+        toast.success('Usuário criado com sucesso', {
+          position: toast.POSITION.TOP_RIGHT
+        });
+        history.push('/login');
         setSubmitting(false);
       })
       .catch((error) => {
@@ -101,9 +124,9 @@ const SignUp = () => {
                 Cadastrar
               </button>
             </div>
-            <div className="btn-sign-up">
-              <Link to="/login">Login</Link>
-            </div>
+          </div>
+          <div className="btn-sign-up">
+            Já tenho conta, <Link to="/login">Entrar</Link>
           </div>
         </div>
       </div>
