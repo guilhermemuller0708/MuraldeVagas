@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { findAllVacancy, deleteVacancyById } from '../../redux/board/actions';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import './index.scss';
+import VacancyContext from '../../context/vacancyContext';
+import { Link } from 'react-router-dom';
 
 function ListVacancy() {
     const [data, setData] = useState([]);
+    const { setVacancyID } = useContext(VacancyContext)
+
 
     useEffect(() => {
         findAllVacancy().then(data => setData(data));
@@ -38,8 +42,12 @@ function ListVacancy() {
                                     {vacancy.requisitos.map(required => <span>{required}</span>)}
                                 </div>
                                 <div className="delete col-2">
-                                    <IconButton>
-                                        <EditIcon color="primary">edit</EditIcon>
+                                    <IconButton onClick={() => setVacancyID(vacancy.id)}>
+                                        <Link to="/vacancy/edit">
+                                            <EditIcon color="primary">
+                                                edit
+                                            </EditIcon>
+                                        </Link>
                                     </IconButton>
                                     <IconButton onClick={() => { deleteVacancy(vacancy.id) }}>
                                         <DeleteForeverIcon color="secondary">delete</DeleteForeverIcon>

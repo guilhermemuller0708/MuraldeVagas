@@ -1,11 +1,12 @@
 import { TextField, MenuItem, Button, FormGroup } from '@material-ui/core';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "./index.scss";
 import "@pathofdev/react-tag-input/build/index.css";
 import { useEffect } from 'react';
 import { createVacancy, findAllAreas } from '../../redux/board/actions';
+import VacancyContext from '../../context/vacancyContext';
 
 function CreateVacancy() {
     const [areas, setAreas] = useState([]);
@@ -15,7 +16,9 @@ function CreateVacancy() {
     const [requiredKnowledge, setRequiredKnowledge] = useState([])
     const [differentialKnowledge, setDifferentialKnowledge] = useState([])
 
+    const { vacancyID } = useContext(VacancyContext)
 
+    console.log(vacancyID);
     useEffect(() => {
         findAllAreas().then(data => setAreas(data));
     }, [])
