@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { WhatsappShareButton, WhatsappIcon } from 'react-share';
 import { ArrowBack, Money } from '@material-ui/icons';
+import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Loader from 'app/components/Loader';
 
@@ -44,6 +45,11 @@ const VacancyView = () => {
         <span onClick={backToVacancyList}>
           <ArrowBack />
         </span>
+        <div>
+          <WhatsappShareButton separator=":: " url={String(window.location)}>
+            <WhatsappIcon size={40} round={true} />
+          </WhatsappShareButton>
+        </div>
       </div>
       <div className="content">
         <span className="area">{vacancyForView?.areaDaVaga?.areaDaVaga}</span>

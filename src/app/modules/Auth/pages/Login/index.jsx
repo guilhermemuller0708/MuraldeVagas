@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { object, string } from 'yup';
 import { Link } from 'react-router-dom';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
-import { unwrapResult } from '@reduxjs/toolkit';
+import { CircularProgress } from '@material-ui/core';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import './index.scss';
 
@@ -24,8 +24,8 @@ const Schema = object().shape({
 const Login = () => {
   const dispatch = useDispatch();
 
-  const { loginError } = useSelector(
-    ({ auth }) => ({ loginError: auth.loginError }),
+  const { loginError, loading } = useSelector(
+    ({ auth }) => ({ loginError: auth.loginError, loading: auth.loading }),
     shallowEqual
   );
 
@@ -36,6 +36,7 @@ const Login = () => {
     };
 
     const promise = dispatch(actions.loginUser(user));
+
     setSubmitting(false);
     return () => {
       promise.abort();
@@ -70,7 +71,7 @@ const Login = () => {
                     <Field
                       name="email"
                       component={Input}
-                      label="Usuário"
+                      label="Email"
                       type="text"
                     />
                     <Field
@@ -95,13 +96,17 @@ const Login = () => {
 
           <div className="actions-sign-in">
             <div className="btn-login">
-              <button type="submit" onClick={saveFormClick}>
-                Entrar
-              </button>
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <button type="submit" onClick={saveFormClick}>
+                  Entrar
+                </button>
+              )}
             </div>
-            <div className="btn-sign-up">
-              <Link to="/signup">Cadastro</Link>
-            </div>
+          </div>
+          <div className="btn-sign-up">
+            Ainda não tem uma conta? <Link to="/signup">Cadastrar</Link>
           </div>
         </div>
       </div>
@@ -110,25 +115,3 @@ const Login = () => {
 };
 
 export default Login;
-
-{
-  /* <div className="form-group row">
-  <label className="col-xl-3 col-lg-3 col-form-label">Customer Name</label>
-  <div className="col-lg-9 col-xl-6">
-    <input
-      disabled
-      name="name"
-      type="text"
-      placeholder="Name"
-      className={`form-control form-control-lg form-control-solid ${getInputClasses(
-        touched,
-        errors,
-        'name'
-      )}`}
-      onChange={(e) => setFieldValue('name', e.target.value)}
-      {...getFieldProps('name')}
-    />
-    {touched.name && errors.name ? <code>{errors.name}</code> : null}
-  </div>
-</div>; */
-}

@@ -1,25 +1,37 @@
 .backgroundHeaderStyle {
-    background-color: #247ba0 !important;
+  background-color: #247ba0 !important;
 
-    h6 {
-        a {
-            color: #ffffff;
-            text-decoration: none;
-        }
+  h6 {
+    a {
+      color: #ffffff;
+      text-decoration: none;
     }
+  }
 
-    button {
-        background-color: transparent;
-        box-shadow: none;
-        margin-right: 1rem;
+  button {
+    background-color: transparent;
+    box-shadow: none;
+    margin-right: 1rem;
 
-        a {
-            color: #ffffff;
-            text-decoration: none;
+    a {
+      color: #ffffff;
+      text-decoration: none;
 
-            &:hover {
-                color: black;
-            }
-        }
+      &:hover {
+        color: black;
+      }
     }
+  }
+  $small: 790px;
+
+  .wrapper-user-context {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  @media screen and (max-width: $small) {
+    .user-email {
+      display: none;
+    }
+  }
 }

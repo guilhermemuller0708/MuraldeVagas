@@ -1,5 +1,9 @@
-import { Favorite, FavoriteBorder as Desfavorie } from '@material-ui/icons';
-import { Business, Money } from '@material-ui/icons';
+import {
+  Favorite,
+  FavoriteBorder as Desfavorie,
+  Business,
+  Money
+} from '@material-ui/icons';
 
 import './index.scss';
 

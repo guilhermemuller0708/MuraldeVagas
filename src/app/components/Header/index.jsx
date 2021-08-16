@@ -13,6 +13,7 @@ import {
 import { AccountCircle } from '@material-ui/icons';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
+import './index.scss';
 import { logout } from 'app/modules/Auth/redux/slice';
 import { Link } from 'react-router-dom';
 import "./index.scss";
@@ -61,8 +62,8 @@ export default function MenuAppBar() {
           <Button variant="contained">
             <Link to="/vacancy/all">Listar Vagas</Link>
           </Button>
-          <div>
-            {user?.name}
+          <div className="wrapper-user-context">
+            <p className="user-email">{user?.nome}</p>
             <IconButton
               aria-controls="menu-appbar"
               aria-haspopup="true"

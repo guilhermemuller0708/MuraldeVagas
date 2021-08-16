@@ -7,6 +7,7 @@ $medium: 900px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(#b3b4bb, #111d61);
 
   .login-form {
     width: 40%;
@@ -17,6 +18,7 @@ $medium: 900px;
     flex-direction: column;
     border: 0.1rem solid #ccc;
     border-radius: 0.4rem;
+    background: #ffffff;
 
     .form {
       width: 70%;
@@ -33,13 +35,14 @@ $medium: 900px;
       width: 100%;
       display: flex;
       justify-content: center;
+      padding: 0 1rem 0 1rem;
 
       button {
-        width: 10rem;
+        width: 100%;
         border: 0.1rem solid;
         border-radius: 0.4rem;
         color: #ffffff;
-        background: #028030;
+        background: #4196b9;
       }
     }
 
