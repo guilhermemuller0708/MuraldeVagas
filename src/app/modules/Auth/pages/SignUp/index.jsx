@@ -1,9 +1,11 @@
 import { useRef } from 'react';
 import { object, string } from 'yup';
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
-import { CircularProgress } from '@material-ui/core';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 import './index.scss';
 
@@ -12,35 +14,56 @@ import { Input } from 'app/components/Input';
 import { actions } from '../../redux/slice';
 
 const initialValues = {
+  name: '',
   email: '',
   password: ''
 };
 
 const Schema = object().shape({
-  email: string().required('Campo obrigatório'),
-  password: string().required('Campo obrigatório')
+  name: string().required('Campo obrigatório'),
+  email: string().email('Insira um e-mail').required('Campo obrigatório'),
+  password: string()
+    .min(5, 'Digite ao menos 5 caracteres')
+    .required('Campo obrigatório')
 });
 
-const Login = () => {
+const SignUp = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const { loginError, loading } = useSelector(
-    ({ auth }) => ({ loginError: auth.loginError, loading: auth.loading }),
-    shallowEqual
-  );
+  const handleSignUp = (values, { setSubmitting }) => {
+    console.log('values', values);
 
-  const handleLogin = (values, { setSubmitting }) => {
     const user = {
+      cpf: '00000000000',
       email: values.email,
-      senha: values.password
+      endereco: {
+        cep: '0',
+        cidade: ' ',
+        complemento: ' ',
+        estado: ' ',
+        logradouro: ' ',
+        numero: 0
+      },
+      nome: values.name,
+      senha: values.password,
+      telefones: [''],
+      tipo: 'candidato'
     };
 
-    const promise = dispatch(actions.loginUser(user));
-
+    dispatch(actions.signUpUser(user))
+      .then(unwrapResult)
+      .then((data) => {
+        toast.success('Usuário criado com sucesso', {
+          position: toast.POSITION.TOP_RIGHT
+        });
+        history.push('/login');
+        setSubmitting(false);
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
     setSubmitting(false);
-    return () => {
-      promise.abort();
-    };
   };
 
   const btnRef = useRef();
@@ -54,25 +77,26 @@ const Login = () => {
     <>
       <div className="wrapper-login">
         <div className="login-form">
-          {!!loginError ? (
-            <div className="error-message-login">{loginError.message}</div>
-          ) : (
-            ''
-          )}
           <Formik
             initialValues={initialValues}
             validationSchema={Schema}
-            onSubmit={handleLogin}
+            onSubmit={handleSignUp}
           >
             {({ handleSubmit, isSubmitting }) => {
               return (
                 <>
                   <Form className="form">
                     <Field
+                      name="name"
+                      component={Input}
+                      label="Nome"
+                      type="text"
+                    />
+                    <Field
                       name="email"
                       component={Input}
                       label="Email"
-                      type="text"
+                      type="email"
                     />
                     <Field
                       name="password"
@@ -96,17 +120,13 @@ const Login = () => {
 
           <div className="actions-sign-in">
             <div className="btn-login">
-              {loading ? (
-                <CircularProgress />
-              ) : (
-                <button type="submit" onClick={saveFormClick}>
-                  Entrar
-                </button>
-              )}
+              <button type="submit" onClick={saveFormClick}>
+                Cadastrar
+              </button>
             </div>
           </div>
           <div className="btn-sign-up">
-            Ainda não tem uma conta? <Link to="/signup">Cadastrar</Link>
+            Já tenho conta, <Link to="/login">Entrar</Link>
           </div>
         </div>
       </div>
@@ -114,4 +134,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

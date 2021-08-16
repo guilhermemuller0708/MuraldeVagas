@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 import { logout } from './redux/slice';
@@ -10,22 +10,17 @@ const AuthInit = ({ children }) => {
   const didRequest = useRef(false);
   const dispatch = useDispatch();
   const [showSplashScreen, setShowSplashScreen] = useState(true);
-  const { authToken } = useSelector(
-    ({ auth }) => ({
-      authToken: auth.authToken
-    }),
-    shallowEqual
-  );
 
   useEffect(() => {
-    const requestUser = async () => {
+    const requestUser = async (user) => {
       if (!didRequest.current) {
-        dispatch(actions.getUserByToken())
+        dispatch(actions.getUserById(user))
           .then(unwrapResult)
           .then(() => {
             setShowSplashScreen(false);
           })
           .catch(() => {
+            setShowSplashScreen(false);
             dispatch(logout());
           });
       }
@@ -33,10 +28,12 @@ const AuthInit = ({ children }) => {
       return () => (didRequest.current = true);
     };
 
-    if (authToken) {
-      requestUser();
+    const user = JSON.parse(window.localStorage.getItem('authToken'));
+
+    if (!!user) {
+      requestUser(user);
     } else {
-      // dispatch(logout());
+      dispatch(logout());
       setShowSplashScreen(false);
     }
 

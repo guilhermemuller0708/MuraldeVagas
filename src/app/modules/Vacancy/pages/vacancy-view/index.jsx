@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { WhatsappShareButton, WhatsappIcon } from 'react-share';
 import { ArrowBack, Money } from '@material-ui/icons';
+import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Loader from 'app/components/Loader';
 
@@ -44,9 +45,14 @@ const VacancyView = () => {
         <span onClick={backToVacancyList}>
           <ArrowBack />
         </span>
+        <div>
+          <WhatsappShareButton separator=":: " url={String(window.location)}>
+            <WhatsappIcon size={40} round={true} />
+          </WhatsappShareButton>
+        </div>
       </div>
       <div className="content">
-        <span className="area">{vacancyForView.areaDaVaga.areaDaVaga}</span>
+        <span className="area">{vacancyForView?.areaDaVaga?.areaDaVaga}</span>
         <h3>{vacancyForView.titulo}</h3>
         <span className="salary">
           <Money /> {vacancyForView.salario}
@@ -61,20 +67,20 @@ const VacancyView = () => {
         <div>
           <p>Benefícios:</p>
           <div className="benefit">
-            {vacancyForView.beneficios.map((beneficio) => {
-              return <span key={beneficio}>{beneficio}</span>;
+            {vacancyForView.beneficios.map((beneficio, index) => {
+              return <span key={index}>{beneficio}</span>;
             })}
           </div>
           <p>Requisitos:</p>
           <div className="requirements">
-            {vacancyForView.requisitos.map((requisito) => {
-              return <span key={requisito}>{requisito}</span>;
+            {vacancyForView.requisitos.map((requisito, index) => {
+              return <span key={index}>{requisito}</span>;
             })}
           </div>
           <p>Diferenciais:</p>
           <div className="differentials">
-            {vacancyForView.diferenciais.map((diferencial) => {
-              return <span key={diferencial}>{diferencial}</span>;
+            {vacancyForView.diferenciais.map((diferencial, index) => {
+              return <span key={index}>{diferencial}</span>;
             })}
           </div>
         </div>

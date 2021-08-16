@@ -1,0 +1,12 @@
+$small: 790px;
+
+.wrapper-user-context {
+  display: flex;
+  align-items: flex-end;
+}
+
+@media screen and (max-width: $small) {
+  .user-email {
+    display: none;
+  }
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './index.css';
+import './index.scss';
 import { store } from './redux/store';
 
 import App from './App';

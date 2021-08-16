@@ -1,13 +1,31 @@
 import api from 'app/services/api';
 
-const BASE_URL_API = '/login';
+const URL_API_RELOAD = '/usuarios';
+const URL_API_LOGIN = '/login';
+const URL_API_SIGNUP = '/candidatos';
 
 const login = (user) => {
-  return api.post(BASE_URL_API, user);
+  return api.post(URL_API_LOGIN, user);
 };
 
-const userByToken = (token) => {
-  return api.get(BASE_URL_API);
+const signUp = (user) => {
+  return api.post(URL_API_SIGNUP, user);
 };
 
-export { login, userByToken };
+const userByToken = ({ token }) => {
+  return api.get(`${URL_API_RELOAD}/5`, {
+    headers: {
+      Authorization: token
+    }
+  });
+};
+
+const userById = ({ token, userId }) => {
+  return api.get(`${URL_API_RELOAD}/${userId}`, {
+    headers: {
+      Authorization: token
+    }
+  });
+};
+
+export { login, signUp, userByToken, userById };

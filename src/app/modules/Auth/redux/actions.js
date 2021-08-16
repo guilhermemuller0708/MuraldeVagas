@@ -13,13 +13,11 @@ const loginUser = createAsyncThunk(
   }
 );
 
-const getUserByToken = createAsyncThunk(
-  'auth/user-by-token',
-  async (_, { rejectWithValue, getState }) => {
-    const { auth } = getState();
-
+const signUpUser = createAsyncThunk(
+  'auth/signUp',
+  async (user, { rejectWithValue }) => {
     try {
-      const { data } = await api.userByToken(auth.authToken);
+      const { data } = await api.signUp(user);
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -27,4 +25,28 @@ const getUserByToken = createAsyncThunk(
   }
 );
 
-export { loginUser, getUserByToken };
+const getUserByToken = createAsyncThunk(
+  'auth/user-by-token',
+  async (authToken, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await api.userByToken(authToken);
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+const getUserById = createAsyncThunk(
+  'auth/user-by-id',
+  async (user, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await api.userById(user);
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export { loginUser, signUpUser, getUserByToken, getUserById };

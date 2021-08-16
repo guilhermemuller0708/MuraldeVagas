@@ -1,3 +1,5 @@
+$small: 790px;
+
 .list-tags {
   margin-bottom: 0.7rem;
 
@@ -15,6 +17,9 @@
 
   .back {
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 
     span {
       background: #3f51b5;
@@ -60,6 +65,16 @@
 
     .differentials {
       @extend .list-tags;
+    }
+  }
+}
+
+@media screen and (max-width: $small) {
+  .wrapper-view {
+    margin: 1rem !important;
+
+    .content {
+      margin: 0 1rem 0 1rem !important;
     }
   }
 }
