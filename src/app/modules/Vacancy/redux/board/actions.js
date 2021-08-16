@@ -22,6 +22,24 @@ const findAllVacancy = async () => {
   }
 };
 
+const findAllAreas = async () => {
+  try {
+    const { data } = await api.findAreas();
+    return data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+const createVacancy = async (vacancy) => {
+  try {
+    const { data } = await api.createVacancy(vacancy);
+    return data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
 const deleteVacancyById = async (vacancyId) => {
   try {
     const { data } = await api.deleteVacancy(vacancyId);
@@ -43,4 +61,4 @@ const fetchVacancyById = createAsyncThunk(
   }
 );
 
-export { fetchVacancys, fetchVacancyById, findAllVacancy, deleteVacancyById };
+export { fetchVacancys, fetchVacancyById, findAllVacancy, deleteVacancyById, findAllAreas, createVacancy };

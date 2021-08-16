@@ -35,5 +35,14 @@ const deleteVacancy = (vacancyId) => {
   return api.delete(`${BASE_URL_API}/${vacancyId}`);
 }
 
+const findAreas = () => {
+  return api.get(`/areas`);
+}
 
-export { findAll, findById, findAllWithoutRules, deleteVacancy };
+const createVacancy = (vacancy) => {
+  return api.post(`${BASE_URL_API}`, vacancy);
+}
+
+
+
+export { findAll, findById, findAllWithoutRules, deleteVacancy, findAreas, createVacancy };

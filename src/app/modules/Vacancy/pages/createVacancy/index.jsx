@@ -1,50 +1,52 @@
 import { TextField, MenuItem, Button, FormGroup } from '@material-ui/core';
 import React from 'react';
 import { useState } from 'react';
+import ReactTagInput from "@pathofdev/react-tag-input";
 import "./index.scss";
+import "@pathofdev/react-tag-input/build/index.css";
+import { useEffect } from 'react';
+import { createVacancy, findAllAreas } from '../../redux/board/actions';
 
 function CreateVacancy() {
+    const [areas, setAreas] = useState([]);
+    const [areaOfVacancy, setAreaOfVacancy] = useState({ areaDaVaga: '' });
     const [vacancy, setVacancy] = useState({});
+    const [benefits, setBenefits] = useState([])
+    const [requiredKnowledge, setRequiredKnowledge] = useState([])
+    const [differentialKnowledge, setDifferentialKnowledge] = useState([])
 
+
+    useEffect(() => {
+        findAllAreas().then(data => setAreas(data));
+    }, [])
 
     const handleSubmit = (event) => {
-        console.log(vacancy);
         event.preventDefault();
-    }
+        const areaOfVacancyChoosed = areas.find((area) => area.id === areaOfVacancy.areaDaVaga);
+        const vacancyToAdd = { ...vacancy, benefits, requiredKnowledge, differentialKnowledge, areaOfVacancyChoosed }
 
-    const TagsInput = props => {
-        const [tags, setTags] = React.useState(props.tags);
-        const removeTags = indexToRemove => {
-            setTags([...tags.filter((_, index) => index !== indexToRemove)]);
-        };
-        const addTags = event => {
-            if (event.target.value !== "") {
-                setTags([...tags, event.target.value]);
-                event.target.value = "";
-            }
-        };
-        return (
-            <div className="tags-input">
-                <ul id="tags">
-                    {tags.map((tag, index) => (
-                        <li key={index} className="tag">
-                            <span className='tag-title'>{tag}</span>
-                            <span className='tag-close-icon'
-                                onClick={() => removeTags(index)}
-                            >
-                                x
-                            </span>
-                        </li>
-                    ))}
-                </ul>
-                <input
-                    type="text"
-                    onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
-                    placeholder="Adicione um novo beneficio"
-                />
-            </div>
-        );
-    };
+        console.log(vacancyToAdd);
+
+        const convertVacancy = {
+            areaDaVaga: areaOfVacancyChoosed,
+            beneficios: vacancyToAdd.benefits,
+            descricao: vacancyToAdd.description,
+            desejavel: vacancyToAdd.education,
+            diferenciais: vacancyToAdd.differentialKnowledge,
+            requisitos: vacancyToAdd.requiredKnowledge,
+            empresa: vacancyToAdd.companyName,
+            enderecoEmpresa: vacancyToAdd.address,
+            salario: vacancyToAdd.salary,
+            titulo: vacancyToAdd.title,
+        }
+
+        createVacancy(convertVacancy).then(data => {
+            console.log(data);
+            return alert("Vaga criada com sucesso");
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
     return (
         <>
@@ -72,29 +74,25 @@ function CreateVacancy() {
                                 <TextField
                                     id="interestArea"
                                     select
-                                    name="interestArea"
                                     label="Área de atuação"
-
-                                // value={currency}
-                                // onChange={handleChange}
+                                    value={areaOfVacancy.areaDaVaga}
+                                    onChange={(event) => { setAreaOfVacancy({ areaDaVaga: event.target.value }) }}
                                 >
-                                    {/* {currencies.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.label}
-                                    </MenuItem>
-                                ))} */}
-                                    <MenuItem>
-                                        Developer
-                                    </MenuItem>
-                                    <MenuItem>
-                                        Quality Assurance
-                                    </MenuItem>
-                                    <MenuItem>
-                                        Designer
-                                    </MenuItem>
+                                    {areas.map((option) => (
+                                        <MenuItem key={option.id} value={option.id}>
+                                            {option.areaDaVaga}
+                                        </MenuItem>
+                                    ))}
                                 </TextField>
-                                <TagsInput id="benefit" label="Beneficios" name="benefit"
-                                    onChange={(event) => setVacancy({ ...vacancy, benefit: [event.target.value] })} tags={['Nodejs', 'MongoDB']} />
+                                <ReactTagInput
+                                    tags={benefits}
+                                    required
+                                    id="benefit"
+                                    name="benefit"
+                                    onChange={(newTags) => setBenefits(newTags)}
+                                    removeOnBackspace={true}
+                                    placeholder="Adicione um beneficio"
+                                />
                             </div>
                         </div>
                         <div className="row">
@@ -107,19 +105,32 @@ function CreateVacancy() {
                                     onChange={(event) => setVacancy({ ...vacancy, education: event.target.value })} />
                             </div>
                             <div className="col-3 offset-col">
-
+                                <TextField required id="salary" label="Salário" name="salary"
+                                    onChange={(event) => setVacancy({ ...vacancy, salary: event.target.value })} />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-5">
-                                <TextField required id="requiredKnowledge" label="Conhecimentos requeridos"
-                                    multiline rows={4} name="requiredKnowledge"
-                                    onChange={(event) => setVacancy({ ...vacancy, requiredKnowledge: [event.target.value] })} />
+                                <ReactTagInput
+                                    tags={requiredKnowledge}
+                                    required
+                                    id="requiredKnowledge"
+                                    name="requiredKnowledge"
+                                    onChange={(newRequired) => setRequiredKnowledge(newRequired)}
+                                    removeOnBackspace={true}
+                                    placeholder="Adicione um conhecimento requerido"
+                                />
                             </div>
                             <div className="col-5">
-                                <TextField required id="differentialKnowledge" label="Conhecimentos desejáveis"
-                                    multiline rows={4} name="differentialKnowledge"
-                                    onChange={(event) => setVacancy({ ...vacancy, differentialKnowledge: [event.target.value] })} />
+                                <ReactTagInput
+                                    tags={differentialKnowledge}
+                                    required
+                                    id="differentialKnowledge"
+                                    name="differentialKnowledge"
+                                    onChange={(newDifferential) => setDifferentialKnowledge(newDifferential)}
+                                    removeOnBackspace={true}
+                                    placeholder="Adicione um conhecimento desejável"
+                                />
                             </div>
                         </div>
                         <div className="row">

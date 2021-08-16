@@ -12,8 +12,13 @@ function ListVacancy() {
         findAllVacancy().then(data => setData(data));
     }, [])
 
-    const deleteVacancy = (vacancyId) => {
-        deleteVacancyById(vacancyId).then( console.log('Deletado com sucesso'));
+    const deleteVacancy = async (vacancyId) => {
+
+        await deleteVacancyById(vacancyId).then(alert('Deletado com sucesso!'))
+            .catch((err) => {
+                console.log(err)
+            });
+        setData(data.filter(vacancy => vacancy.id !== vacancyId));
     }
 
     return (
@@ -30,13 +35,13 @@ function ListVacancy() {
                                     <h2>{vacancy.titulo}</h2>
                                     <p><strong>{`${vacancy.empresa} - R$ ${vacancy.salario},00`}</strong></p>
                                     <p>{vacancy.descricao}</p>
-                                    <span>{vacancy.desejavel}</span>
+                                    {vacancy.requisitos.map(required => <span>{required}</span>)}
                                 </div>
                                 <div className="delete col-2">
                                     <IconButton>
                                         <EditIcon color="primary">edit</EditIcon>
                                     </IconButton>
-                                    <IconButton onClick={() => {deleteVacancy(vacancy.id)}}>
+                                    <IconButton onClick={() => { deleteVacancy(vacancy.id) }}>
                                         <DeleteForeverIcon color="secondary">delete</DeleteForeverIcon>
                                     </IconButton>
                                 </div>
