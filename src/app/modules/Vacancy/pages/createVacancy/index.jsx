@@ -22,10 +22,10 @@ function CreateVacancy() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (vacancy.length > 7) {
-            const areaOfVacancyChoosed = areas.find((area) => area.id === areaOfVacancy.areaDaVaga);
-            const vacancyToAdd = { ...vacancy, benefits, requiredKnowledge, differentialKnowledge, areaOfVacancyChoosed }
+        const areaOfVacancyChoosed = areas.find((area) => area.id === areaOfVacancy.areaDaVaga);
+        const vacancyToAdd = { ...vacancy, benefits, requiredKnowledge, differentialKnowledge, areaOfVacancyChoosed }
 
+        if (Object.keys(vacancyToAdd).length >= 10) {
             console.log(vacancyToAdd);
 
             const convertVacancy = {
@@ -47,9 +47,9 @@ function CreateVacancy() {
             }).catch(err => {
                 console.log(err);
             })
+        } else {
+            return alert('Preencha os campos com obrigatórios (*)')
         }
-
-        return alert('Preencha os campos com obrigatórios (*)')
     }
 
     return (
