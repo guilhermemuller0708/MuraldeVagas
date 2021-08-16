@@ -22,30 +22,34 @@ function CreateVacancy() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const areaOfVacancyChoosed = areas.find((area) => area.id === areaOfVacancy.areaDaVaga);
-        const vacancyToAdd = { ...vacancy, benefits, requiredKnowledge, differentialKnowledge, areaOfVacancyChoosed }
+        if (vacancy.length > 7) {
+            const areaOfVacancyChoosed = areas.find((area) => area.id === areaOfVacancy.areaDaVaga);
+            const vacancyToAdd = { ...vacancy, benefits, requiredKnowledge, differentialKnowledge, areaOfVacancyChoosed }
 
-        console.log(vacancyToAdd);
+            console.log(vacancyToAdd);
 
-        const convertVacancy = {
-            areaDaVaga: areaOfVacancyChoosed,
-            beneficios: vacancyToAdd.benefits,
-            descricao: vacancyToAdd.description,
-            desejavel: vacancyToAdd.education,
-            diferenciais: vacancyToAdd.differentialKnowledge,
-            requisitos: vacancyToAdd.requiredKnowledge,
-            empresa: vacancyToAdd.companyName,
-            enderecoEmpresa: vacancyToAdd.address,
-            salario: vacancyToAdd.salary,
-            titulo: vacancyToAdd.title,
+            const convertVacancy = {
+                areaDaVaga: areaOfVacancyChoosed,
+                beneficios: vacancyToAdd.benefits,
+                descricao: vacancyToAdd.description,
+                desejavel: vacancyToAdd.education,
+                diferenciais: vacancyToAdd.differentialKnowledge,
+                requisitos: vacancyToAdd.requiredKnowledge,
+                empresa: vacancyToAdd.companyName,
+                enderecoEmpresa: vacancyToAdd.address,
+                salario: vacancyToAdd.salary,
+                titulo: vacancyToAdd.title,
+            }
+
+            createVacancy(convertVacancy).then(data => {
+                console.log(data);
+                return alert("Vaga criada com sucesso");
+            }).catch(err => {
+                console.log(err);
+            })
         }
 
-        createVacancy(convertVacancy).then(data => {
-            console.log(data);
-            return alert("Vaga criada com sucesso");
-        }).catch(err => {
-            console.log(err);
-        })
+        return alert('Preencha os campos com obrigatórios (*)')
     }
 
     return (
@@ -91,7 +95,7 @@ function CreateVacancy() {
                                     name="benefit"
                                     onChange={(newTags) => setBenefits(newTags)}
                                     removeOnBackspace={true}
-                                    placeholder="Adicione um beneficio"
+                                    placeholder="Adicione um beneficio *"
                                 />
                             </div>
                         </div>
@@ -118,7 +122,7 @@ function CreateVacancy() {
                                     name="requiredKnowledge"
                                     onChange={(newRequired) => setRequiredKnowledge(newRequired)}
                                     removeOnBackspace={true}
-                                    placeholder="Adicione um conhecimento requerido"
+                                    placeholder="Adicione um conhecimento requerido *"
                                 />
                             </div>
                             <div className="col-5">
@@ -129,7 +133,7 @@ function CreateVacancy() {
                                     name="differentialKnowledge"
                                     onChange={(newDifferential) => setDifferentialKnowledge(newDifferential)}
                                     removeOnBackspace={true}
-                                    placeholder="Adicione um conhecimento desejável"
+                                    placeholder="Adicione um conhecimento desejável *"
                                 />
                             </div>
                         </div>
