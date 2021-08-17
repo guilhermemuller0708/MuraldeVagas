@@ -95,7 +95,11 @@ function CreateVacancy() {
                 })
             }
         } else {
-            return modalConfimation('Preencha os campos com obrigatórios (*)');
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Preencha os campos com obrigatórios (*)',
+            });
         }
     }
 
