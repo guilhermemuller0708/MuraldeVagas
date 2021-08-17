@@ -21,18 +21,30 @@ function ListVacancy() {
     }, [setVacancyID]);
 
     const deleteVacancy = async (vacancyId) => {
-
-        await deleteVacancyById(vacancyId)
-            .then(() => {
-                Swal.fire({
-                    title: 'Vaga deletada com sucesso!',
-                    timer: 2000,
-                    confirmButtonText: `Ok`,
-                })
-            }).catch((err) => {
-                console.log(err)
-            });
-        setData(data.filter(vacancy => vacancy.id !== vacancyId));
+        Swal.fire({
+            title: 'Você tem certeza?',
+            text: "Você quer apagar essa vaga?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim!',
+            cancelButtonText: 'Não'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteVacancyById(vacancyId)
+                    .then(() => {
+                        Swal.fire(
+                            'Sua vaga foi deletada!!.'
+                        )
+                        setData(data.filter(vacancy => vacancy.id !== vacancyId));
+                    }).catch((err) => {
+                        console.log(err)
+                    });
+            } else {
+                Swal.close();
+            }
+        })
     }
 
     return (

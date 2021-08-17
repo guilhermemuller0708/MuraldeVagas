@@ -48,6 +48,19 @@ function CreateVacancy() {
         }
     }, [vacancyID])
 
+    const modalConfimation = (textModal) => {
+        Swal.fire({
+            title: textModal,
+            timer: 2000,
+            icon: 'success',
+            confirmButtonText: `Ok`,
+        }).then((result) => {
+            if (result.dismiss || result.isConfirmed) {
+                setRedirect(true);
+            }
+        })
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const areaOfVacancyChoosed = areas.find((area) => area.id === areaOfVacancy.areaDaVaga);
@@ -68,45 +81,21 @@ function CreateVacancy() {
                 titulo: vacancyToAdd.title,
             }
             if (vacancyID !== 0) {
-
                 editVacancy(vacancyID, convertVacancy).then(data => {
-                    Swal.fire({
-                        title: 'Vaga editada com sucesso!',
-                        timer: 2000,
-                        confirmButtonText: `Ok`,
-                    }).then((result) => {
-                        if (result.dismiss || result.isConfirmed) {
-                            setRedirect(true);
-                        }
-                    })
+                    modalConfimation('Vaga editada com sucesso!!')
                 }).catch(err => {
                     console.log(err);
                 })
             } else {
                 createVacancy(convertVacancy).then(data => {
                     console.log(data);
-                    Swal.fire({
-                        title: 'Vaga criada com sucesso! Deseja criar uma nova?',
-                        showDenyButton: true,
-                        confirmButtonText: `Sim`,
-                        denyButtonText: `Não`,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            setVacancy({});
-                            setRequiredKnowledge([]);
-                            setAreaOfVacancy({ areaDaVaga: '' });
-                            setBenefits([]);
-                            setDifferentialKnowledge([]);
-                        } else if (result.isDenied) {
-                            setRedirect(true);
-                        }
-                    })
+                    modalConfimation('Vaga criada com sucesso!!')
                 }).catch(err => {
                     console.log(err);
                 })
             }
         } else {
-            return alert('Preencha os campos com obrigatórios (*)')
+            return modalConfimation('Preencha os campos com obrigatórios (*)');
         }
     }
 
@@ -119,13 +108,13 @@ function CreateVacancy() {
                         <div className="row">
                             <div className="col-4">
                                 <div className="adjustFullWidth">
-                                    <TextField required id="title" InputLabelProps={{ shrink: true }} variant="outlined" label="Titulo" name="title" value={vacancy.title}
+                                    <TextField required id="title" InputLabelProps={{ shrink: true }} label="Titulo" name="title" value={vacancy.title}
                                         onChange={(event) => setVacancy({ ...vacancy, title: event.target.value })} />
                                 </div>
                             </div>
                             <div className="col-4 offset-col">
                                 <div className="adjustFullWidth">
-                                    <TextField required variant="outlined" InputLabelProps={{ shrink: true }} id="companyName" label="Empresa" name="companyName" value={vacancy.companyName}
+                                    <TextField required InputLabelProps={{ shrink: true }} id="companyName" label="Empresa" name="companyName" value={vacancy.companyName}
                                         onChange={(event) => setVacancy({ ...vacancy, companyName: event.target.value })} />
                                 </div>
                             </div>
@@ -133,7 +122,7 @@ function CreateVacancy() {
                         <div className="row">
                             <div className="col-6">
                                 <div className="adjustFullWidth">
-                                    <TextField required id="description" InputLabelProps={{ shrink: true }} variant="outlined" label="Descrição"
+                                    <TextField required id="description" InputLabelProps={{ shrink: true }} label="Descrição"
                                         multiline rows={4} name="description" value={vacancy.description}
                                         onChange={(event) => setVacancy({ ...vacancy, description: event.target.value })} />
                                 </div>
@@ -144,7 +133,7 @@ function CreateVacancy() {
                                         id="interestArea"
                                         select
                                         InputLabelProps={{ shrink: true }}
-                                        variant="outlined"
+
                                         value={areaOfVacancy.areaDaVaga}
                                         onChange={(event) => { setAreaOfVacancy({ areaDaVaga: event.target.value }) }}
                                         label="Área de atuação"
@@ -170,20 +159,20 @@ function CreateVacancy() {
                         <div className="row">
                             <div className="col-5">
                                 <div className="adjustFullWidth">
-                                    <TextField required id="address" InputLabelProps={{ shrink: true }} variant="outlined" label="Endereço" name="address" value={vacancy.address}
+                                    <TextField required id="address" InputLabelProps={{ shrink: true }} label="Endereço" name="address" value={vacancy.address}
                                         onChange={(event) => setVacancy({ ...vacancy, address: event.target.value })} />
                                 </div>
                             </div>
                             <div className="col-3">
                                 <div className="adjustFullWidth">
-                                    <TextField required id="education" InputLabelProps={{ shrink: true }} variant="outlined" label="Nível de escolaridade" name="education" value={vacancy.education}
+                                    <TextField required id="education" InputLabelProps={{ shrink: true }} label="Nível de escolaridade" name="education" value={vacancy.education}
                                         onChange={(event) => setVacancy({ ...vacancy, education: event.target.value })} />
                                 </div>
                             </div>
                             <div className="col-3 offset-col">
                                 <div className="adjustFullWidth">
 
-                                    <TextField required id="salary" InputLabelProps={{ shrink: true }} variant="outlined" label="Salário" name="salary" value={vacancy.salary}
+                                    <TextField required id="salary" InputLabelProps={{ shrink: true }} label="Salário" name="salary" value={vacancy.salary}
                                         onChange={(event) => setVacancy({ ...vacancy, salary: event.target.value })} />
                                 </div>
                             </div>
