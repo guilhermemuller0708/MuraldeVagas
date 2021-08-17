@@ -11,10 +11,12 @@ function ListVacancy() {
     const [data, setData] = useState([]);
     const { setVacancyID } = useContext(VacancyContext)
 
-
+    // console.log(vacancyID);
     useEffect(() => {
         findAllVacancy().then(data => setData(data));
-    }, [])
+
+        setVacancyID(0);
+    }, [setVacancyID]);
 
     const deleteVacancy = async (vacancyId) => {
 

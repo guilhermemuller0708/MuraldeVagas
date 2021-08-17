@@ -43,6 +43,10 @@ const createVacancy = (vacancy) => {
   return api.post(`${BASE_URL_API}`, vacancy);
 }
 
+const editVacancy = (vacancyId, vacancy) => {
+  return api.put(`${BASE_URL_API}/${vacancyId}`, vacancy);
+}
 
 
-export { findAll, findById, findAllWithoutRules, deleteVacancy, findAreas, createVacancy };
+
+export { findAll, findById, findAllWithoutRules, deleteVacancy, findAreas, createVacancy, editVacancy };
