@@ -13,6 +13,27 @@
         padding: 2rem;
         height: fit-content;
 
+        .headerListVacancy {
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                background-color: #47575d;
+                box-shadow: none;
+                border: 1px solid grey;
+                margin-right: 1rem;
+
+                &:hover {
+                    background-color: #247ba0;
+                }
+
+                a {
+                    color: #ffffff;
+                    text-decoration: none;
+                }
+            }
+        }
+
         .backgroundStyle {
             padding: 2rem 2rem 2rem 0rem;
             width: inherit;

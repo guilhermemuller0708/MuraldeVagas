@@ -1,6 +1,7 @@
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'sweetalert2/src/sweetalert2.scss'
 
 import AuthInit from 'app/modules/Auth';
 import Router from 'app/routes/Router';

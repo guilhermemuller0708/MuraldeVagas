@@ -7,21 +7,6 @@
       text-decoration: none;
     }
   }
-
-  button {
-    background-color: transparent;
-    box-shadow: none;
-    margin-right: 1rem;
-
-    a {
-      color: #ffffff;
-      text-decoration: none;
-
-      &:hover {
-        color: black;
-      }
-    }
-  }
   $small: 790px;
 
   .wrapper-user-context {
@@ -32,6 +17,15 @@
   @media screen and (max-width: $small) {
     .user-email {
       display: none;
+    }
+  }
+}
+
+ul {
+  li {
+    a {
+      text-decoration: unset;
+      color: rgba(0, 0, 0, 0.87) !important;
     }
   }
 }

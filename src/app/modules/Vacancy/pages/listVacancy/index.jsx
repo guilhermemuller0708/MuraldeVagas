@@ -6,6 +6,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import './index.scss';
 import VacancyContext from '../../context/vacancyContext';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { Button } from '@material-ui/core';
 
 function ListVacancy() {
     const [data, setData] = useState([]);
@@ -20,8 +22,14 @@ function ListVacancy() {
 
     const deleteVacancy = async (vacancyId) => {
 
-        await deleteVacancyById(vacancyId).then(alert('Deletado com sucesso!'))
-            .catch((err) => {
+        await deleteVacancyById(vacancyId)
+            .then(() => {
+                Swal.fire({
+                    title: 'Vaga deletada com sucesso!',
+                    timer: 2000,
+                    confirmButtonText: `Ok`,
+                })
+            }).catch((err) => {
                 console.log(err)
             });
         setData(data.filter(vacancy => vacancy.id !== vacancyId));
@@ -31,8 +39,11 @@ function ListVacancy() {
         <div className="container">
             <div className="col-12 generalStyle">
                 {(data.length > 0) ? (<>
-                    <div>
+                    <div className="headerListVacancy">
                         <h1>Vagas disponíveis</h1>
+                        <Button variant="contained">
+                            <Link to="/vacancy/new">Cadastrar vaga</Link>
+                        </Button>
                     </div>
                     <div className="backgroundStyle">
                         {data.map(vacancy => (
@@ -41,7 +52,7 @@ function ListVacancy() {
                                     <h2>{vacancy.titulo}</h2>
                                     <p><strong>{`${vacancy.empresa} - R$ ${vacancy.salario},00`}</strong></p>
                                     <p>{vacancy.descricao}</p>
-                                    {vacancy.requisitos.map(required => <span>{required}</span>)}
+                                    {vacancy.requisitos.map((required, index) => <span key={index}>{required}</span>)}
                                 </div>
                                 <div className="delete col-2">
                                     <IconButton onClick={() => setVacancyID(vacancy.id)}>

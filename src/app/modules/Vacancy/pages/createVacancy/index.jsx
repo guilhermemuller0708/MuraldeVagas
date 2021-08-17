@@ -7,6 +7,7 @@ import "@pathofdev/react-tag-input/build/index.css";
 import { useEffect } from 'react';
 import { createVacancy, findAllAreas, findOneVacancy, editVacancy } from '../../redux/board/actions';
 import VacancyContext from '../../context/vacancyContext';
+import Swal from 'sweetalert2';
 import { Redirect } from 'react-router-dom';
 
 function CreateVacancy() {
@@ -16,6 +17,7 @@ function CreateVacancy() {
     const [benefits, setBenefits] = useState([])
     const [requiredKnowledge, setRequiredKnowledge] = useState([])
     const [differentialKnowledge, setDifferentialKnowledge] = useState([])
+    const [redirect, setRedirect] = useState(false);
 
     const { vacancyID } = useContext(VacancyContext)
 
@@ -46,8 +48,6 @@ function CreateVacancy() {
         }
     }, [vacancyID])
 
-
-
     const handleSubmit = (event) => {
         event.preventDefault();
         const areaOfVacancyChoosed = areas.find((area) => area.id === areaOfVacancy.areaDaVaga);
@@ -70,17 +70,37 @@ function CreateVacancy() {
             if (vacancyID !== 0) {
 
                 editVacancy(vacancyID, convertVacancy).then(data => {
-
-
-                    alert("Vaga editada com sucesso");
-                    return (<Redirect to="/vacancy/all" />)
+                    Swal.fire({
+                        title: 'Vaga editada com sucesso!',
+                        timer: 2000,
+                        confirmButtonText: `Ok`,
+                    }).then((result) => {
+                        if (result.dismiss || result.isConfirmed) {
+                            setRedirect(true);
+                        }
+                    })
                 }).catch(err => {
                     console.log(err);
                 })
             } else {
                 createVacancy(convertVacancy).then(data => {
                     console.log(data);
-                    return alert("Vaga criada com sucesso");
+                    Swal.fire({
+                        title: 'Vaga criada com sucesso! Deseja criar uma nova?',
+                        showDenyButton: true,
+                        confirmButtonText: `Sim`,
+                        denyButtonText: `Não`,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            setVacancy({});
+                            setRequiredKnowledge([]);
+                            setAreaOfVacancy({ areaDaVaga: '' });
+                            setBenefits([]);
+                            setDifferentialKnowledge([]);
+                        } else if (result.isDenied) {
+                            setRedirect(true);
+                        }
+                    })
                 }).catch(err => {
                     console.log(err);
                 })
@@ -98,35 +118,44 @@ function CreateVacancy() {
                     <FormGroup className="backgroundStyle" onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-4">
-                                <TextField required id="title" variant="filled" label="Titulo" name="title" value={vacancy.title}
-                                    onChange={(event) => setVacancy({ ...vacancy, title: event.target.value })} />
+                                <div className="adjustFullWidth">
+                                    <TextField required id="title" InputLabelProps={{ shrink: true }} variant="outlined" label="Titulo" name="title" value={vacancy.title}
+                                        onChange={(event) => setVacancy({ ...vacancy, title: event.target.value })} />
+                                </div>
                             </div>
                             <div className="col-4 offset-col">
-                                <TextField required variant="filled" id="companyName" label="Empresa" name="companyName" value={vacancy.companyName}
-                                    onChange={(event) => setVacancy({ ...vacancy, companyName: event.target.value })} />
+                                <div className="adjustFullWidth">
+                                    <TextField required variant="outlined" InputLabelProps={{ shrink: true }} id="companyName" label="Empresa" name="companyName" value={vacancy.companyName}
+                                        onChange={(event) => setVacancy({ ...vacancy, companyName: event.target.value })} />
+                                </div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-6">
-                                <TextField required id="description" variant="filled" label="Descrição"
-                                    multiline rows={4} name="description" value={vacancy.description}
-                                    onChange={(event) => setVacancy({ ...vacancy, description: event.target.value })} />
+                                <div className="adjustFullWidth">
+                                    <TextField required id="description" InputLabelProps={{ shrink: true }} variant="outlined" label="Descrição"
+                                        multiline rows={4} name="description" value={vacancy.description}
+                                        onChange={(event) => setVacancy({ ...vacancy, description: event.target.value })} />
+                                </div>
                             </div>
                             <div className="col-4 offset-col">
-                                <TextField
-                                    id="interestArea"
-                                    select
-                                    variant="filled"
-                                    label="Área de atuação"
-                                    value={areaOfVacancy.areaDaVaga}
-                                    onChange={(event) => { setAreaOfVacancy({ areaDaVaga: event.target.value }) }}
-                                >
-                                    {areas.map((option) => (
-                                        <MenuItem key={option.id} value={option.id}>
-                                            {option.areaDaVaga}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                                <div className="adjustFullWidth">
+                                    <TextField
+                                        id="interestArea"
+                                        select
+                                        InputLabelProps={{ shrink: true }}
+                                        variant="outlined"
+                                        value={areaOfVacancy.areaDaVaga}
+                                        onChange={(event) => { setAreaOfVacancy({ areaDaVaga: event.target.value }) }}
+                                        label="Área de atuação"
+                                    >
+                                        {areas.map((option) => (
+                                            <MenuItem key={option.id} value={option.id}>
+                                                {option.areaDaVaga}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </div>
                                 <ReactTagInput
                                     tags={benefits}
                                     required
@@ -140,16 +169,23 @@ function CreateVacancy() {
                         </div>
                         <div className="row">
                             <div className="col-5">
-                                <TextField required id="address" variant="filled" label="Endereço" name="address" value={vacancy.address}
-                                    onChange={(event) => setVacancy({ ...vacancy, address: event.target.value })} />
+                                <div className="adjustFullWidth">
+                                    <TextField required id="address" InputLabelProps={{ shrink: true }} variant="outlined" label="Endereço" name="address" value={vacancy.address}
+                                        onChange={(event) => setVacancy({ ...vacancy, address: event.target.value })} />
+                                </div>
                             </div>
                             <div className="col-3">
-                                <TextField required id="education" variant="filled" label="Nível de escolaridade" name="education" value={vacancy.education}
-                                    onChange={(event) => setVacancy({ ...vacancy, education: event.target.value })} />
+                                <div className="adjustFullWidth">
+                                    <TextField required id="education" InputLabelProps={{ shrink: true }} variant="outlined" label="Nível de escolaridade" name="education" value={vacancy.education}
+                                        onChange={(event) => setVacancy({ ...vacancy, education: event.target.value })} />
+                                </div>
                             </div>
                             <div className="col-3 offset-col">
-                                <TextField required id="salary" variant="filled" label="Salário" name="salary" value={vacancy.salary}
-                                    onChange={(event) => setVacancy({ ...vacancy, salary: event.target.value })} />
+                                <div className="adjustFullWidth">
+
+                                    <TextField required id="salary" InputLabelProps={{ shrink: true }} variant="outlined" label="Salário" name="salary" value={vacancy.salary}
+                                        onChange={(event) => setVacancy({ ...vacancy, salary: event.target.value })} />
+                                </div>
                             </div>
                         </div>
                         <div className="row">
@@ -187,6 +223,7 @@ function CreateVacancy() {
                     </FormGroup>
                 </div>
             </div>
+            {redirect && <Redirect to="/vacancy/all" />}
         </>
     );
 };

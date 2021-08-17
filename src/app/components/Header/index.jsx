@@ -8,7 +8,6 @@ import {
   Typography,
   MenuItem,
   Menu,
-  Button,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -56,12 +55,6 @@ export default function MenuAppBar() {
           <Typography variant="h6" className={classes.title}>
             <Link to="/vacancy">Mural de vagas</Link>
           </Typography>
-          <Button variant="contained">
-            <Link to="/vacancy/new">Cadastrar vaga</Link>
-          </Button>
-          <Button variant="contained">
-            <Link to="/vacancy/all">Listar Vagas</Link>
-          </Button>
           <div className="wrapper-user-context">
             <p className="user-email">{user?.nome}</p>
             <IconButton
@@ -81,6 +74,9 @@ export default function MenuAppBar() {
             >
               <MenuItem value="profile" onClick={handleProfile}>
                 Perfil
+              </MenuItem>
+              <MenuItem value="vacancy">
+                <Link to="/vacancy/all">Gerenciar vagas</Link>
               </MenuItem>
               <MenuItem value="logout" onClick={handleLogout}>
                 LogOut
