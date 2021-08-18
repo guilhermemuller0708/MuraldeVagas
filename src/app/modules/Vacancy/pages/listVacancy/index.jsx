@@ -1,24 +1,28 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { findAllVacancy, deleteVacancyById } from '../../redux/board/actions';
 import IconButton from '@material-ui/core/IconButton';
+import { Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import './index.scss';
-import VacancyContext from '../../context/vacancyContext';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { Button } from '@material-ui/core';
+
+import { findAllVacancy, deleteVacancyById } from '../../redux/board/actions';
+import VacancyContext from '../../context/vacancyContext';
+import './index.scss';
 
 function ListVacancy() {
     const [data, setData] = useState([]);
     const { setVacancyID } = useContext(VacancyContext)
-
-    // console.log(vacancyID);
+    const history = useHistory();
     useEffect(() => {
         findAllVacancy().then(data => setData(data));
 
         setVacancyID(0);
     }, [setVacancyID]);
+
+    const handleClickVacancy = (vacancyId) => {
+        history.push(`/vacancy/${vacancyId}/view`);
+    };
 
     const deleteVacancy = async (vacancyId) => {
         Swal.fire({
@@ -59,8 +63,8 @@ function ListVacancy() {
                     </div>
                     <div className="backgroundStyle">
                         {data.map(vacancy => (
-                            <div className="cardVacancy row" key={vacancy.id}>
-                                <div className="content col-10">
+                            <div className="cardVacancy row" key={vacancy.id} >
+                                <div className="content col-10" onClick={() => handleClickVacancy(vacancy.id)}>
                                     <h2>{vacancy.titulo}</h2>
                                     <p><strong>{`${vacancy.empresa} - R$ ${vacancy.salario},00`}</strong></p>
                                     <p>{vacancy.descricao}</p>
