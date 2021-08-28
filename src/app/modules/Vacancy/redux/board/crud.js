@@ -9,7 +9,7 @@ const findAll = (queryParams) => {
     field = 'titulo',
     order = 'ASC',
     search = '',
-    // requirements,
+    requirements,
     salary = 0
   } = queryParams;
 
@@ -18,7 +18,7 @@ const findAll = (queryParams) => {
   // const searchByTitle = !!search ? `&titulo=${search}&empresa=${search}&descricao=${search}` : '';
   const searchByTitle = !!search ? `&titulo=${search}` : '';
 
-  const url = `${BASE_URL_API}/paginado?pagina=${pageNumber}&linhasPorPagina=${perPage}&salario=${salary}&ordem=${field}&salario=${salary}&direcao=${order}${searchByTitle}`;
+  const url = `${BASE_URL_API}/paginado?pagina=${pageNumber}&linhasPorPagina=${perPage}&salario=${salary}&ordem=${field}&salario=${salary}&desejavel=${`${queryParams.requirements.join()}`}&direcao=${order}${searchByTitle}`;
 
   return api.get(url);
 };
@@ -27,26 +27,47 @@ const findById = (vacancyId) => {
   return api.get(`${BASE_URL_API}/${vacancyId}`);
 };
 
+const findAllVacancyFavorites = (userId) => {
+  return api.get(`candidatos/${userId}/vagas/favoritas`);
+};
+
 const findAllWithoutRules = () => {
   return api.get(`${BASE_URL_API}`);
-}
+};
 
 const deleteVacancy = (vacancyId) => {
   return api.delete(`${BASE_URL_API}/${vacancyId}`);
-}
+};
 
 const findAreas = () => {
   return api.get(`/areas`);
-}
+};
 
 const createVacancy = (vacancy) => {
   return api.post(`${BASE_URL_API}`, vacancy);
-}
+};
 
 const editVacancy = (vacancyId, vacancy) => {
   return api.put(`${BASE_URL_API}/${vacancyId}`, vacancy);
-}
+};
 
+const favoriteVacancyById = (userId, vacancyId) => {
+  return api.post(`candidatos/${userId}/vagas/favoritar/${vacancyId}`);
+};
 
+const disfavorVacancyById = (userId, vacancyId) => {
+  return api.delete(`candidatos/${userId}/vagas/desfavoritar/${vacancyId}`);
+};
 
-export { findAll, findById, findAllWithoutRules, deleteVacancy, findAreas, createVacancy, editVacancy };
+export {
+  findAll,
+  findById,
+  findAllWithoutRules,
+  deleteVacancy,
+  findAreas,
+  createVacancy,
+  editVacancy,
+  favoriteVacancyById,
+  disfavorVacancyById,
+  findAllVacancyFavorites
+};

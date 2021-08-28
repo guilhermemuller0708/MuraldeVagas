@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchVacancyById, fetchVacancys } from './actions';
+import {
+  fetchVacancyById,
+  fetchVacancys,
+  favoriteVacancy,
+  disfavorVacancy,
+  fetchVacancysFavorites
+} from './actions';
 
 const initialState = {
   listLoading: false,
@@ -9,6 +15,7 @@ const initialState = {
     totalCount: 0,
     items: []
   },
+  vacanciesFavorites: [],
   vacancyForEdit: undefined,
   vacancyForView: undefined,
   filter: {
@@ -62,6 +69,51 @@ export const boardSlice = createSlice({
     [fetchVacancyById.rejected]: (state, action) => {
       state.vacancyForView = undefined;
       state.actionsLoading = false;
+    },
+
+    [favoriteVacancy.pending]: (state, action) => {
+      state.actionsLoading = true;
+    },
+    [favoriteVacancy.fulfilled]: (state, { payload }) => {
+      state.actionsLoading = false;
+    },
+    [favoriteVacancy.rejected]: (state, action) => {
+      state.actionsLoading = false;
+    },
+
+    [disfavorVacancy.pending]: (state, action) => {
+      state.actionsLoading = true;
+    },
+    [disfavorVacancy.fulfilled]: (state, { payload }) => {
+      state.actionsLoading = false;
+    },
+    [disfavorVacancy.rejected]: (state, action) => {
+      state.actionsLoading = false;
+    },
+
+    [fetchVacancysFavorites.pending]: (state, action) => {
+      state.actionsLoading = true;
+    },
+    [fetchVacancysFavorites.fulfilled]: (state, { payload = [] }) => {
+      const vacancies = state.entities.items;
+
+      payload.forEach((item) => {
+        const vacancieIndex = vacancies.findIndex(
+          (vacancy) => parseInt(vacancy.id) === parseInt(item.id)
+        );
+
+        vacancies[vacancieIndex] = {
+          ...vacancies[vacancieIndex],
+          isFavorite: true
+        };
+      });
+
+      state.entities.items = vacancies;
+
+      state.actionsLoading = false;
+    },
+    [fetchVacancysFavorites.rejected]: (state, action) => {
+      state.actionsLoading = false;
     }
   }
 });
@@ -70,5 +122,8 @@ export const { setFilters } = boardSlice.actions;
 
 export const actions = {
   fetchVacancys,
-  fetchVacancyById
+  fetchVacancyById,
+  favoriteVacancy,
+  disfavorVacancy,
+  fetchVacancysFavorites
 };

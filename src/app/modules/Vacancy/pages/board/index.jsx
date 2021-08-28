@@ -31,6 +31,7 @@ const VacancyPage = () => {
   useEffect(() => {
     const delaySearch = setTimeout(() => {
       const promise = dispatch(actions.fetchVacancys(filter));
+      dispatch(actions.fetchVacancysFavorites());
 
       return () => {
         promise.abort();
@@ -40,6 +41,10 @@ const VacancyPage = () => {
       clearTimeout(delaySearch);
     };
   }, [dispatch, filter]);
+
+  useEffect(() => {
+    console.log('entities', entities);
+  }, [entities]);
 
   const handleChangePaginator = (_, value) => {
     dispatch(setFilters({ page: value }));
@@ -66,7 +71,7 @@ const VacancyPage = () => {
         </div>
         <div className="board">
           <div className="list">
-            <List entities={entities} />
+            <List entities={entities} key="list-vacancy" />
           </div>
 
           <div className="paginator">

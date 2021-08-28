@@ -13,6 +13,22 @@ const fetchVacancys = createAsyncThunk(
   }
 );
 
+const fetchVacancysFavorites = createAsyncThunk(
+  'board/fetch-favorites-vacancy',
+  async (_, { rejectWithValue, getState }) => {
+    const {
+      auth: { user }
+    } = getState();
+
+    try {
+      const { data } = await api.findAllVacancyFavorites(user.id);
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const findAllVacancy = async () => {
   try {
     const { data } = await api.findAllWithoutRules();
@@ -79,4 +95,46 @@ const fetchVacancyById = createAsyncThunk(
   }
 );
 
-export { fetchVacancys, fetchVacancyById, findAllVacancy, deleteVacancyById, findAllAreas, createVacancy, findOneVacancy, editVacancy };
+const favoriteVacancy = createAsyncThunk(
+  'board/favorite-vacancy',
+  async (vacancyId, { rejectWithValue, getState }) => {
+    const {
+      auth: { user }
+    } = getState();
+    try {
+      const { data } = await api.favoriteVacancyById(user.id, vacancyId);
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+const disfavorVacancy = createAsyncThunk(
+  'board/favorite-vacancy',
+  async (vacancyId, { rejectWithValue, getState }) => {
+    const {
+      auth: { user }
+    } = getState();
+    try {
+      const { data } = await api.disfavorVacancyById(user.id, vacancyId);
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export {
+  fetchVacancys,
+  fetchVacancyById,
+  findAllVacancy,
+  deleteVacancyById,
+  findAllAreas,
+  createVacancy,
+  findOneVacancy,
+  editVacancy,
+  favoriteVacancy,
+  disfavorVacancy,
+  fetchVacancysFavorites
+};

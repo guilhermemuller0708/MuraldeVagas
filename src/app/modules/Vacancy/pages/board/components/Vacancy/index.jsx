@@ -1,6 +1,6 @@
 import {
   Favorite,
-  FavoriteBorder as Desfavorie,
+  FavoriteBorder as Desfavor,
   Business,
   Money
 } from '@material-ui/icons';
@@ -46,7 +46,7 @@ const Vacancy = ({ entitie, handleClickVacancy, handleClickFavorite }) => {
         </div>
         <div className="favorite">
           <span onClick={() => handleClickFavorite(id)}>
-            {isFavorite ? <Favorite /> : <Desfavorie />}
+            {isFavorite ? <Favorite /> : <Desfavor />}
           </span>
         </div>
       </div>

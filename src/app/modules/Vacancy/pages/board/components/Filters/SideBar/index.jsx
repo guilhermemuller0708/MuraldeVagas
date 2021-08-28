@@ -8,6 +8,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
+import ReactTagInput from '@pathofdev/react-tag-input';
 
 import { setFilters } from '../../../../../redux/board/slice';
 
@@ -16,7 +17,7 @@ import './index.scss';
 const SideBar = ({ closeFilterFullScreen }) => {
   const dispatch = useDispatch();
 
-  const { order, salary } = useSelector(
+  const { order, salary, requirements } = useSelector(
     ({ board }) => ({
       field: board.filter.field,
       order: board.filter.order,
@@ -30,6 +31,14 @@ const SideBar = ({ closeFilterFullScreen }) => {
     dispatch(
       setFilters({
         [event.target.name]: event.target.value
+      })
+    );
+  };
+
+  const handleChangeRequirements = (event) => {
+    dispatch(
+      setFilters({
+        requirements: event
       })
     );
   };
@@ -81,6 +90,17 @@ const SideBar = ({ closeFilterFullScreen }) => {
               <MenuItem value="DESC">Descendente</MenuItem>
             </Select>
           </FormControl>
+        </div>
+        <div>
+          <Typography>Requisitos da vaga</Typography>
+          <ReactTagInput
+            tags={requirements}
+            required
+            name="requirements"
+            onChange={handleChangeRequirements}
+            removeOnBackspace={true}
+            placeholder=" "
+          />
         </div>
         {/* <div className="select-order">
           <FormControl>
