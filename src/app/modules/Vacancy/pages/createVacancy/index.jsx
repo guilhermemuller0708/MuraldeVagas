@@ -18,10 +18,10 @@ function CreateVacancy() {
     const [requiredKnowledge, setRequiredKnowledge] = useState([])
     const [differentialKnowledge, setDifferentialKnowledge] = useState([])
     const [redirect, setRedirect] = useState(false);
+    const [error, setError] = useState(false);
 
     const { vacancyID } = useContext(VacancyContext)
 
-    // console.log(vacancyID);
     useEffect(() => {
         findAllAreas().then(data => setAreas(data));
 
@@ -61,12 +61,26 @@ function CreateVacancy() {
         })
     }
 
+    const validateRequiredInputs = (vacancyToAdd) => {
+        if ((vacancyToAdd.address === undefined || vacancyToAdd.address.length === 0)
+            || (vacancyToAdd.title === undefined || vacancyToAdd.title.length === 0)
+            || (vacancyToAdd.education === undefined || vacancyToAdd.education.length === 0)
+            || (vacancyToAdd.companyName === undefined || vacancyToAdd.companyName.length === 0)) {
+            setError(true)
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Preencha os campos com obrigatórios (*)',
+            });
+        }
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const areaOfVacancyChoosed = areas.find((area) => area.id === areaOfVacancy.areaDaVaga);
         const vacancyToAdd = { ...vacancy, benefits, requiredKnowledge, differentialKnowledge, areaOfVacancyChoosed }
 
-        if (Object.keys(vacancyToAdd).length >= 10) {
+        if (!validateRequiredInputs(vacancyToAdd)) {
             console.log(vacancyToAdd);
             const convertVacancy = {
                 areaDaVaga: areaOfVacancyChoosed,
@@ -86,6 +100,7 @@ function CreateVacancy() {
                 }).catch(err => {
                     console.log(err);
                 })
+                setError(false);
             } else {
                 createVacancy(convertVacancy).then(data => {
                     console.log(data);
@@ -93,14 +108,10 @@ function CreateVacancy() {
                 }).catch(err => {
                     console.log(err);
                 })
+                setError(false);
             }
-        } else {
-            return Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Preencha os campos com obrigatórios (*)',
-            });
         }
+        return;
     }
 
     return (
@@ -113,12 +124,16 @@ function CreateVacancy() {
                             <div className="col-4">
                                 <div className="adjustFullWidth">
                                     <TextField required id="title" InputLabelProps={{ shrink: true }} label="Titulo" name="title" value={vacancy.title}
+                                        error={error}
+                                        helperText={error && "Esse campo é obrigatório."}
                                         onChange={(event) => setVacancy({ ...vacancy, title: event.target.value })} />
                                 </div>
                             </div>
                             <div className="col-4 offset-col">
                                 <div className="adjustFullWidth">
                                     <TextField required InputLabelProps={{ shrink: true }} id="companyName" label="Empresa" name="companyName" value={vacancy.companyName}
+                                        error={error}
+                                        helperText={error && "Esse campo é obrigatório."}
                                         onChange={(event) => setVacancy({ ...vacancy, companyName: event.target.value })} />
                                 </div>
                             </div>
@@ -128,6 +143,8 @@ function CreateVacancy() {
                                 <div className="adjustFullWidth">
                                     <TextField required id="description" InputLabelProps={{ shrink: true }} label="Descrição"
                                         multiline rows={4} name="description" value={vacancy.description}
+                                        error={error}
+                                        helperText={error && "Esse campo é obrigatório."}
                                         onChange={(event) => setVacancy({ ...vacancy, description: event.target.value })} />
                                 </div>
                             </div>
@@ -151,32 +168,36 @@ function CreateVacancy() {
                                 </div>
                                 <ReactTagInput
                                     tags={benefits}
-                                    required
                                     id="benefit"
                                     name="benefit"
                                     onChange={(newTags) => setBenefits(newTags)}
                                     removeOnBackspace={true}
-                                    placeholder="Adicione um beneficio *"
+                                    placeholder="Adicione um beneficio"
                                 />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-5">
                                 <div className="adjustFullWidth">
-                                    <TextField required id="address" InputLabelProps={{ shrink: true }} label="Endereço" name="address" value={vacancy.address}
+                                    <TextField required id="address" InputLabelProps={{ shrink: true }}
+                                        label="Endereço" name="address" value={vacancy.address}
+                                        error={error}
+                                        helperText={error && "Esse campo é obrigatório."}
                                         onChange={(event) => setVacancy({ ...vacancy, address: event.target.value })} />
                                 </div>
                             </div>
                             <div className="col-3">
                                 <div className="adjustFullWidth">
                                     <TextField required id="education" InputLabelProps={{ shrink: true }} label="Nível de escolaridade" name="education" value={vacancy.education}
+                                        error={error}
+                                        helperText={error && "Esse campo é obrigatório."}
                                         onChange={(event) => setVacancy({ ...vacancy, education: event.target.value })} />
                                 </div>
                             </div>
                             <div className="col-3 offset-col">
                                 <div className="adjustFullWidth">
 
-                                    <TextField required id="salary" InputLabelProps={{ shrink: true }} label="Salário" name="salary" value={vacancy.salary}
+                                    <TextField id="salary" InputLabelProps={{ shrink: true }} label="Salário" name="salary" value={vacancy.salary}
                                         onChange={(event) => setVacancy({ ...vacancy, salary: event.target.value })} />
                                 </div>
                             </div>
@@ -185,23 +206,21 @@ function CreateVacancy() {
                             <div className="col-5">
                                 <ReactTagInput
                                     tags={requiredKnowledge}
-                                    required
                                     id="requiredKnowledge"
                                     name="requiredKnowledge"
                                     onChange={(newRequired) => setRequiredKnowledge(newRequired)}
                                     removeOnBackspace={true}
-                                    placeholder="Adicione um conhecimento requerido *"
+                                    placeholder="Adicione um conhecimento requerido"
                                 />
                             </div>
                             <div className="col-5">
                                 <ReactTagInput
                                     tags={differentialKnowledge}
-                                    required
                                     id="differentialKnowledge"
                                     name="differentialKnowledge"
                                     onChange={(newDifferential) => setDifferentialKnowledge(newDifferential)}
                                     removeOnBackspace={true}
-                                    placeholder="Adicione um conhecimento desejável *"
+                                    placeholder="Adicione um conhecimento desejável"
                                 />
                             </div>
                         </div>
