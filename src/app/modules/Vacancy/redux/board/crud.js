@@ -9,8 +9,9 @@ const findAll = (queryParams) => {
     field = 'titulo',
     order = 'ASC',
     search = '',
-    requirements,
-    salary = 0
+    desirable,
+    salary = 0,
+    company
   } = queryParams;
 
   const pageNumber = page - 1;
@@ -18,7 +19,7 @@ const findAll = (queryParams) => {
   // const searchByTitle = !!search ? `&titulo=${search}&empresa=${search}&descricao=${search}` : '';
   const searchByTitle = !!search ? `&titulo=${search}` : '';
 
-  const url = `${BASE_URL_API}/paginado?pagina=${pageNumber}&linhasPorPagina=${perPage}&salario=${salary}&ordem=${field}&salario=${salary}&desejavel=${`${queryParams.requirements.join()}`}&direcao=${order}${searchByTitle}`;
+  const url = `${BASE_URL_API}/paginado?pagina=${pageNumber}&linhasPorPagina=${perPage}&salario=${salary}&ordem=${field}&salario=${salary}&desejavel=${desirable}&empresa=${company}&direcao=${order}${searchByTitle}`;
 
   return api.get(url);
 };

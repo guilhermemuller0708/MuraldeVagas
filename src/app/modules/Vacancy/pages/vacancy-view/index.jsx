@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
-import { WhatsappShareButton, WhatsappIcon } from 'react-share';
+import {
+  WhatsappShareButton,
+  WhatsappIcon,
+  LinkedinShareButton,
+  LinkedinIcon
+} from 'react-share';
 import { ArrowBack, Money } from '@material-ui/icons';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
@@ -46,9 +51,16 @@ const VacancyView = () => {
           <ArrowBack />
         </span>
         <div>
-          <WhatsappShareButton separator=":: " url={String(window.location)}>
+          <WhatsappShareButton
+            separator=":: "
+            url={String(window.location)}
+            style={{ marginRight: '0.2rem' }}
+          >
             <WhatsappIcon size={40} round={true} />
           </WhatsappShareButton>
+          <LinkedinShareButton separator=":: " url={String(window.location)}>
+            <LinkedinIcon size={40} round={true} />
+          </LinkedinShareButton>
         </div>
       </div>
       <div className="content">

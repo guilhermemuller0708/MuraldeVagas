@@ -26,8 +26,6 @@ const List = ({ entities = [] }) => {
       (entitie) => parseInt(entitie.id) === parseInt(vacancyId)
     );
 
-    console.log('vacancy', vacancy);
-
     if (vacancy?.isFavorite) {
       dispatch(actions.disfavorVacancy(vacancyId))
         .then(unwrapResult)
