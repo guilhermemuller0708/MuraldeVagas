@@ -13,12 +13,11 @@ import { Redirect } from 'react-router-dom';
 function CreateVacancy() {
     const [areas, setAreas] = useState([]);
     const [areaOfVacancy, setAreaOfVacancy] = useState({ areaDaVaga: '' });
-    const [vacancy, setVacancy] = useState({});
+    const [vacancy, setVacancy] = useState({ companyName: ' ', address: ' ', title: ' ', education: ' ', description: ' ' });
     const [benefits, setBenefits] = useState([])
     const [requiredKnowledge, setRequiredKnowledge] = useState([])
     const [differentialKnowledge, setDifferentialKnowledge] = useState([])
     const [redirect, setRedirect] = useState(false);
-    const [error, setError] = useState(false);
 
     const { vacancyID } = useContext(VacancyContext)
 
@@ -28,7 +27,6 @@ function CreateVacancy() {
         if (vacancyID !== 0) {
             findOneVacancy(vacancyID)
                 .then(data => {
-                    // console.log(data);
                     setVacancy({
                         description: data.descricao,
                         education: data.desejavel,
@@ -66,7 +64,6 @@ function CreateVacancy() {
             || (vacancyToAdd.title === undefined || vacancyToAdd.title.length === 0)
             || (vacancyToAdd.education === undefined || vacancyToAdd.education.length === 0)
             || (vacancyToAdd.companyName === undefined || vacancyToAdd.companyName.length === 0)) {
-            setError(true)
             return Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -100,7 +97,6 @@ function CreateVacancy() {
                 }).catch(err => {
                     console.log(err);
                 })
-                setError(false);
             } else {
                 createVacancy(convertVacancy).then(data => {
                     console.log(data);
@@ -108,10 +104,19 @@ function CreateVacancy() {
                 }).catch(err => {
                     console.log(err);
                 })
-                setError(false);
             }
         }
         return;
+    }
+
+    const validateInput = (value) => (value === undefined || value.length === 0);
+
+    const disableButton = () => {
+        if (vacancy.address.length <= 1 || vacancy.title.length <= 1
+            || vacancy.education.length <= 1 || vacancy.companyName.length <= 1) {
+            return true;
+        }
+        return false;
     }
 
     return (
@@ -124,16 +129,16 @@ function CreateVacancy() {
                             <div className="col-4">
                                 <div className="adjustFullWidth">
                                     <TextField required id="title" InputLabelProps={{ shrink: true }} label="Titulo" name="title" value={vacancy.title}
-                                        error={error}
-                                        helperText={error && "Esse campo é obrigatório."}
+                                        error={validateInput(vacancy.title) && true}
+                                        helperText={validateInput(vacancy.title) && "Esse campo é obrigatório."}
                                         onChange={(event) => setVacancy({ ...vacancy, title: event.target.value })} />
                                 </div>
                             </div>
                             <div className="col-4 offset-col">
                                 <div className="adjustFullWidth">
                                     <TextField required InputLabelProps={{ shrink: true }} id="companyName" label="Empresa" name="companyName" value={vacancy.companyName}
-                                        error={error}
-                                        helperText={error && "Esse campo é obrigatório."}
+                                        error={validateInput(vacancy.companyName) && true}
+                                        helperText={validateInput(vacancy.companyName) && "Esse campo é obrigatório."}
                                         onChange={(event) => setVacancy({ ...vacancy, companyName: event.target.value })} />
                                 </div>
                             </div>
@@ -143,8 +148,8 @@ function CreateVacancy() {
                                 <div className="adjustFullWidth">
                                     <TextField required id="description" InputLabelProps={{ shrink: true }} label="Descrição"
                                         multiline rows={4} name="description" value={vacancy.description}
-                                        error={error}
-                                        helperText={error && "Esse campo é obrigatório."}
+                                        error={validateInput(vacancy.description) && true}
+                                        helperText={validateInput(vacancy.description) && "Esse campo é obrigatório."}
                                         onChange={(event) => setVacancy({ ...vacancy, description: event.target.value })} />
                                 </div>
                             </div>
@@ -154,7 +159,6 @@ function CreateVacancy() {
                                         id="interestArea"
                                         select
                                         InputLabelProps={{ shrink: true }}
-
                                         value={areaOfVacancy.areaDaVaga}
                                         onChange={(event) => { setAreaOfVacancy({ areaDaVaga: event.target.value }) }}
                                         label="Área de atuação"
@@ -181,16 +185,17 @@ function CreateVacancy() {
                                 <div className="adjustFullWidth">
                                     <TextField required id="address" InputLabelProps={{ shrink: true }}
                                         label="Endereço" name="address" value={vacancy.address}
-                                        error={error}
-                                        helperText={error && "Esse campo é obrigatório."}
-                                        onChange={(event) => setVacancy({ ...vacancy, address: event.target.value })} />
+                                        error={validateInput(vacancy.address) && true}
+                                        helperText={validateInput(vacancy.address) && "Esse campo é obrigatório."}
+                                        onChange={(event) => setVacancy({ ...vacancy, address: event.target.value })}
+                                    />
                                 </div>
                             </div>
                             <div className="col-3">
                                 <div className="adjustFullWidth">
                                     <TextField required id="education" InputLabelProps={{ shrink: true }} label="Nível de escolaridade" name="education" value={vacancy.education}
-                                        error={error}
-                                        helperText={error && "Esse campo é obrigatório."}
+                                        error={validateInput(vacancy.education) && true}
+                                        helperText={validateInput(vacancy.education) && "Esse campo é obrigatório."}
                                         onChange={(event) => setVacancy({ ...vacancy, education: event.target.value })} />
                                 </div>
                             </div>
@@ -226,7 +231,7 @@ function CreateVacancy() {
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <Button className="buttonStyle" type="submit" variant="contained" color="primary"
+                                <Button className="buttonStyle" type="submit" variant="contained" color="primary" disabled={disableButton()}
                                     onClick={handleSubmit} >
                                     {vacancyID !== 0 ? 'Salvar' : 'Cadastrar'}
                                 </Button>
