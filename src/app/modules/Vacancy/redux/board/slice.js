@@ -95,21 +95,37 @@ export const boardSlice = createSlice({
       state.actionsLoading = true;
     },
     [fetchVacancysFavorites.fulfilled]: (state, { payload = [] }) => {
-      const vacancies = state.entities.items;
+      let vacancies = state.entities.items;
 
-      payload.forEach((item) => {
-        const vacancieIndex = vacancies.findIndex(
-          (vacancy) => parseInt(vacancy.id) === parseInt(item.id)
-        );
+      if (payload.length === 0) {
+        vacancies = vacancies.map((item) => {
+          return {
+            ...item,
+            isFavorite: false
+          };
+        });
+      } else {
+        vacancies = vacancies.map((item) => {
+          return {
+            ...item,
+            isFavorite: false
+          };
+        });
+        state.entities.items = vacancies;
 
-        vacancies[vacancieIndex] = {
-          ...vacancies[vacancieIndex],
-          isFavorite: true
-        };
-      });
+        payload.forEach((item) => {
+          const vacancieIndex = vacancies.findIndex(
+            (vacancy) => parseInt(vacancy.id) === parseInt(item.id)
+          );
+
+          vacancies[vacancieIndex] = {
+            ...vacancies[vacancieIndex],
+            isFavorite: true
+          };
+        });
+      }
 
       state.entities.items = vacancies;
-
       state.actionsLoading = false;
     },
     [fetchVacancysFavorites.rejected]: (state, action) => {

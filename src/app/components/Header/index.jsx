@@ -7,7 +7,7 @@ import {
   Toolbar,
   Typography,
   MenuItem,
-  Menu,
+  Menu
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import './index.scss';
 import { logout } from 'app/modules/Auth/redux/slice';
 import { Link } from 'react-router-dom';
-import "./index.scss";
+import './index.scss';
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -75,9 +75,14 @@ export default function MenuAppBar() {
               <MenuItem value="profile" onClick={handleProfile}>
                 Perfil
               </MenuItem>
-              <MenuItem value="vacancy">
-                <Link to="/vacancy/all">Gerenciar vagas</Link>
-              </MenuItem>
+              {user?.perfis?.includes('ADMIN') ? (
+                <MenuItem value="vacancy">
+                  <Link to="/vacancy/all">Gerenciar vagas</Link>
+                </MenuItem>
+              ) : (
+                ''
+              )}
+
               <MenuItem value="logout" onClick={handleLogout}>
                 LogOut
               </MenuItem>

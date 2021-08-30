@@ -5,10 +5,10 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  TextField
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import ReactTagInput from '@pathofdev/react-tag-input';
 
 import { setFilters } from '../../../../../redux/board/slice';
 
@@ -17,12 +17,10 @@ import './index.scss';
 const SideBar = ({ closeFilterFullScreen }) => {
   const dispatch = useDispatch();
 
-  const { order, salary, requirements } = useSelector(
+  const { order, salary } = useSelector(
     ({ board }) => ({
-      field: board.filter.field,
       order: board.filter.order,
-      salary: board.filter.salary,
-      requirements: board.filter.requirements
+      salary: board.filter.salary
     }),
     shallowEqual
   );
@@ -31,14 +29,6 @@ const SideBar = ({ closeFilterFullScreen }) => {
     dispatch(
       setFilters({
         [event.target.name]: event.target.value
-      })
-    );
-  };
-
-  const handleChangeRequirements = (event) => {
-    dispatch(
-      setFilters({
-        requirements: event
       })
     );
   };
@@ -66,22 +56,13 @@ const SideBar = ({ closeFilterFullScreen }) => {
           <Slider
             min={0}
             max={10000}
-            defaultValue={0}
+            defaultValue={2000}
             step={500}
             value={salary}
             valueLabelDisplay="auto"
             onChange={handleChangeSalary}
           />
         </div>
-        {/* <div className="select-order">
-          <FormControl>
-            <InputLabel>Ordenar por campo</InputLabel>
-            <Select value={field} onChange={handleChange} name="field">
-              <MenuItem value="area">Área</MenuItem>
-              <MenuItem value="titulo">Título</MenuItem>
-            </Select>
-          </FormControl>
-        </div> */}
         <div className="select-order">
           <FormControl>
             <InputLabel>Ordenar por</InputLabel>
@@ -92,30 +73,23 @@ const SideBar = ({ closeFilterFullScreen }) => {
           </FormControl>
         </div>
         <div>
-          <Typography>Requisitos da vaga</Typography>
-          <ReactTagInput
-            tags={requirements}
-            required
-            name="requirements"
-            onChange={handleChangeRequirements}
-            removeOnBackspace={true}
-            placeholder=" "
+          <Typography>Desejavel na vaga</Typography>
+          <TextField
+            name="desirable"
+            fullWidth
+            onChange={handleChange}
+            variant="filled"
           />
         </div>
-        {/* <div className="select-order">
-          <FormControl>
-            <InputLabel>Requisitos</InputLabel>
-            <Select
-              value={requirements}
-              onChange={handleChange}
-              name="requirements"
-              multiple
-            >
-              <MenuItem value="javascript">javascript</MenuItem>
-              <MenuItem value="spring">spring</MenuItem>
-            </Select>
-          </FormControl>
-        </div> */}
+        <div>
+          <Typography>Empresa</Typography>
+          <TextField
+            name="company"
+            fullWidth
+            onChange={handleChange}
+            variant="filled"
+          />
+        </div>
       </div>
     </>
   );

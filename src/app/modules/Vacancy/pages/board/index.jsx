@@ -42,10 +42,6 @@ const VacancyPage = () => {
     };
   }, [dispatch, filter]);
 
-  useEffect(() => {
-    console.log('entities', entities);
-  }, [entities]);
-
   const handleChangePaginator = (_, value) => {
     dispatch(setFilters({ page: value }));
   };
