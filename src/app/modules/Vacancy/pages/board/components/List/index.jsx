@@ -14,9 +14,10 @@ import { unwrapResult } from '@reduxjs/toolkit';
 const List = ({ entities = [] }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isLoading } = useSelector(
-    ({ board }) => ({
-      isLoading: board.listLoading
+  const { isLoading, user } = useSelector(
+    ({ board, auth }) => ({
+      isLoading: board.listLoading,
+      user: auth.user
     }),
     shallowEqual
   );
@@ -85,6 +86,7 @@ const List = ({ entities = [] }) => {
               key={entitie.id}
               handleClickVacancy={handleClickVacancy}
               handleClickFavorite={handleClickFavorite}
+              user={user}
             />
           </>
         );

@@ -7,7 +7,12 @@ import {
 
 import './index.scss';
 
-const Vacancy = ({ entitie, handleClickVacancy, handleClickFavorite }) => {
+const Vacancy = ({
+  entitie,
+  handleClickVacancy,
+  handleClickFavorite,
+  user
+}) => {
   const {
     id,
     isFavorite = false,
@@ -44,11 +49,15 @@ const Vacancy = ({ entitie, handleClickVacancy, handleClickFavorite }) => {
             })}
           </div>
         </div>
-        <div className="favorite">
-          <span onClick={() => handleClickFavorite(id)}>
-            {isFavorite ? <Favorite /> : <Desfavor />}
-          </span>
-        </div>
+        {!user?.perfis?.includes('ADMIN') ? (
+          <div className="favorite">
+            <span onClick={() => handleClickFavorite(id)}>
+              {isFavorite ? <Favorite /> : <Desfavor />}
+            </span>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     </>
   );
