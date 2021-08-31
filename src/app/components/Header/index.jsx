@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
 
 export default function MenuAppBar() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -39,9 +39,9 @@ export default function MenuAppBar() {
 
   const handleClose = () => setAnchorEl(null);
 
-  const handleProfile = () => {
-    return history.push('/profile');
-  };
+  // const handleProfile = () => {
+  //   return history.push('/profile');
+  // };
 
   const handleLogout = () => {
     handleClose();
@@ -72,9 +72,9 @@ export default function MenuAppBar() {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem value="profile" onClick={handleProfile}>
+              {/* <MenuItem value="profile" onClick={handleProfile}>
                 Perfil
-              </MenuItem>
+              </MenuItem> */}
               {user?.perfis?.includes('ADMIN') ? (
                 <MenuItem value="vacancy">
                   <Link to="/vacancy/all">Gerenciar vagas</Link>

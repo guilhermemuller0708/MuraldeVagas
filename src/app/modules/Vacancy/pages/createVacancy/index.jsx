@@ -109,6 +109,8 @@ function CreateVacancy() {
         return;
     }
 
+    const helperTextInputTags = (inputName) => (<span className="helperTextInputTag">Adicione um {inputName} e aperte "Enter"!!</span>);
+
     const validateInput = (value) => (value === undefined || value.length === 0);
 
     const disableButton = () => {
@@ -124,7 +126,7 @@ function CreateVacancy() {
             <div className="container">
                 <div className="col-12 generalAddStyle">
                     <h1 className="titleStyle">Formulário para cadastro de vaga</h1>
-                    <FormGroup className="backgroundStyle" onSubmit={handleSubmit}>
+                    <FormGroup onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-4">
                                 <div className="adjustFullWidth">
@@ -178,6 +180,7 @@ function CreateVacancy() {
                                     removeOnBackspace={true}
                                     placeholder="Adicione um beneficio"
                                 />
+                                {helperTextInputTags('benefício')}
                             </div>
                         </div>
                         <div className="row">
@@ -217,6 +220,7 @@ function CreateVacancy() {
                                     removeOnBackspace={true}
                                     placeholder="Adicione um conhecimento requerido"
                                 />
+                                {helperTextInputTags('conhecimento requerido')}
                             </div>
                             <div className="col-5">
                                 <ReactTagInput
@@ -227,6 +231,7 @@ function CreateVacancy() {
                                     removeOnBackspace={true}
                                     placeholder="Adicione um conhecimento desejável"
                                 />
+                                {helperTextInputTags('conhecimento desejável')}
                             </div>
                         </div>
                         <div className="row">
